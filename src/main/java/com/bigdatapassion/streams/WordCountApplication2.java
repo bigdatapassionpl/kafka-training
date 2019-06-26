@@ -1,11 +1,13 @@
 package com.bigdatapassion.streams;
 
+import org.apache.kafka.common.serialization.Serdes;
 import org.apache.kafka.streams.KafkaStreams;
 import org.apache.kafka.streams.KeyValue;
 import org.apache.kafka.streams.StreamsBuilder;
 import org.apache.kafka.streams.kstream.KStream;
 import org.apache.kafka.streams.kstream.KTable;
 import org.apache.kafka.streams.kstream.Materialized;
+import org.apache.kafka.streams.kstream.Produced;
 
 import java.util.Arrays;
 import java.util.Properties;
@@ -25,18 +27,16 @@ public class WordCountApplication2 {
 
         KStream<String, String> textLines = builder.stream(TOPIC);
 
-        KTable<Object, Long> wordCountTable = textLines
+        KTable<String, Long> wordCountTable = textLines
                 .flatMapValues(value -> Arrays.asList(PATTERN.split(value.toLowerCase())))
-                .map((key, value) -> new KeyValue<Object, Object>(value, value))
-                .filter((key, value) -> (!value.equals("ma")))
+                .map((key, value) -> new KeyValue<>(value, value))
+                // .filter((key, value) -> (!value.equals("ma")))
                 .groupByKey()
                 .count(Materialized.as("counts-store"));
 
-        KStream wordCountStream = wordCountTable
-                .mapValues(value -> Long.toString(value))
-                .toStream();
+        KStream<String, Long> wordCountStream = wordCountTable.toStream();
 
-        wordCountStream.to(TOPIC_OUT);
+        wordCountStream.to(TOPIC_OUT, Produced.with(Serdes.String(), Serdes.Long()));
 
         KafkaStreams streams = new KafkaStreams(builder.build(), config);
 
