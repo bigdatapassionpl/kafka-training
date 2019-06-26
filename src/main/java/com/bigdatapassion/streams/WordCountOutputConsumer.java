@@ -11,6 +11,7 @@ import org.apache.log4j.Logger;
 
 import java.util.Collections;
 import java.util.Properties;
+import java.util.Random;
 
 import static com.bigdatapassion.KafkaConfigurationFactory.*;
 
@@ -26,6 +27,8 @@ public class WordCountOutputConsumer {
         Properties consumerConfig = createConsumerConfig();
         consumerConfig.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class.getName());
         consumerConfig.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, LongDeserializer.class.getName());
+        consumerConfig.put(ConsumerConfig.GROUP_ID_CONFIG, CONSUMER_GROUP + new Random(System.currentTimeMillis()).nextInt());
+
 
         KafkaConsumer<String, Long> consumer = new KafkaConsumer<>(consumerConfig);
 

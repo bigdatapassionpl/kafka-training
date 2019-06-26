@@ -11,11 +11,11 @@
 
     <properties>
 
-        <kafka.version>[2.0.1]</kafka.version>
+        <kafka.version>[2.2.1]</kafka.version>
 
         <!--Other-->
         <junit.version>4.10</junit.version>
-        <log4j.version>2.11.0</log4j.version>
+        <log4j.version>2.11.2</log4j.version>
         <slf4j.version>1.7.25</slf4j.version>
 
         <!-- Java 8 -->
@@ -86,12 +86,20 @@
     </dependencies>
 
     <build>
+
         <plugins>
             <plugin>
                 <groupId>net.alchim31.maven</groupId>
                 <artifactId>scala-maven-plugin</artifactId>
             </plugin>
+
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>versions-maven-plugin</artifactId>
+            </plugin>
+
         </plugins>
+
     </build>
 
 </project>
