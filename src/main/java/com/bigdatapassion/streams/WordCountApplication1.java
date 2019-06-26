@@ -13,7 +13,7 @@ import java.util.Properties;
 
 import static com.bigdatapassion.KafkaConfigurationFactory.*;
 
-public class KafkaStreamsExample {
+public class WordCountApplication1 {
 
     private static final String PATTERN = "\\W+";
 
@@ -25,12 +25,14 @@ public class KafkaStreamsExample {
 
         KStream<String, String> textLines = builder.stream(TOPIC);
 
-        KTable<String, Long> wordCounts = textLines
+        KTable<String, Long> wordCountTable = textLines
                 .flatMapValues(textLine -> Arrays.asList(textLine.toLowerCase().split(PATTERN)))
                 .groupBy((key, word) -> word)
                 .count(Materialized.as("counts-store"));
 
-        wordCounts.toStream().to(TOPIC_OUT, Produced.with(Serdes.String(), Serdes.Long()));
+        KStream<String, Long> wordCountStream = wordCountTable.toStream();
+
+        wordCountStream.to(TOPIC_OUT, Produced.with(Serdes.String(), Serdes.Long()));
 
         KafkaStreams streams = new KafkaStreams(builder.build(), config);
 
