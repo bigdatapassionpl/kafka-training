@@ -3,7 +3,7 @@
 bash kontenera
 ~~~bash
 docker exec -it cluster_kafka1 bash
-cd /opt/kafka_2.12-1.1.0/
+cd /opt/kafka/
 ~~~
 
 
