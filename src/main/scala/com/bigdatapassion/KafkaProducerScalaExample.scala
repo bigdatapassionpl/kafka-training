@@ -2,6 +2,7 @@ package com.bigdatapassion
 
 import com.bigdatapassion.KafkaConfigurationFactory.{SLEEP, TOPIC, createProducerConfig}
 import com.bigdatapassion.callback.LoggerCallback
+import com.bigdatapassion.prodcon.KafkaProducerExample
 import org.apache.kafka.clients.producer.{KafkaProducer, ProducerRecord}
 import org.apache.log4j.Logger
 

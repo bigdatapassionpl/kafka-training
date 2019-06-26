@@ -4,6 +4,7 @@ import java.util.Collections
 
 import com.bigdatapassion.KafkaConfigurationFactory.{TIMEOUT, TOPIC, createConsumerConfig}
 import com.bigdatapassion.listener.ConsumerRebalanceLoggerListener
+import com.bigdatapassion.prodcon.KafkaConsumerExample
 import org.apache.kafka.clients.consumer.KafkaConsumer
 import org.apache.log4j.Logger
 

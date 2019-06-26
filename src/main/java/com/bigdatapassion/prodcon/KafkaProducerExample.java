@@ -1,4 +1,4 @@
-package com.bigdatapassion;
+package com.bigdatapassion.prodcon;
 
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.Producer;
