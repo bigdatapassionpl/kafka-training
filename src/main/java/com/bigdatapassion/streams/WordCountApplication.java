@@ -29,7 +29,7 @@ public class WordCountApplication {
                 .map((key, value) -> new KeyValue<Object, Object>(value, value))
                 .filter((key, value) -> (!value.equals("ma")))
                 .groupByKey()
-                .count(Materialized.as("CountStore"))
+                .count(Materialized.as("counts-store"))
                 .mapValues(value -> Long.toString(value))
                 .toStream();
 
@@ -48,7 +48,7 @@ public class WordCountApplication {
         // streams.close();
 
         // Eleganckie zamknięcie
-        // Runtime.getRuntime().addShutdownHook(new Thread(streams::close));
+        Runtime.getRuntime().addShutdownHook(new Thread(streams::close));
     }
 
 }

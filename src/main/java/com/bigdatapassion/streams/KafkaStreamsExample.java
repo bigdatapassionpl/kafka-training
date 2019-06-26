@@ -15,6 +15,8 @@ import static com.bigdatapassion.KafkaConfigurationFactory.*;
 
 public class KafkaStreamsExample {
 
+    private static final String PATTERN = "\\W+";
+
     public static void main(final String[] args) {
 
         Properties config = getStreamConfig();
@@ -24,7 +26,7 @@ public class KafkaStreamsExample {
         KStream<String, String> textLines = builder.stream(TOPIC);
 
         KTable<String, Long> wordCounts = textLines
-                .flatMapValues(textLine -> Arrays.asList(textLine.toLowerCase().split("\\W+")))
+                .flatMapValues(textLine -> Arrays.asList(textLine.toLowerCase().split(PATTERN)))
                 .groupBy((key, word) -> word)
                 .count(Materialized.as("counts-store"));
 
@@ -43,7 +45,7 @@ public class KafkaStreamsExample {
         // streams.close();
 
         // Eleganckie zamknięcie
-        // Runtime.getRuntime().addShutdownHook(new Thread(streams::close));
+        Runtime.getRuntime().addShutdownHook(new Thread(streams::close));
     }
 
 }
