@@ -3,6 +3,7 @@ package com.bigdatapassion.streams;
 import org.apache.kafka.common.serialization.Serdes;
 import org.apache.kafka.streams.KafkaStreams;
 import org.apache.kafka.streams.StreamsBuilder;
+import org.apache.kafka.streams.Topology;
 import org.apache.kafka.streams.kstream.*;
 
 import java.util.Arrays;
@@ -34,13 +35,25 @@ public class WordCountApplication1 {
 
         wordCountStream.to(TOPIC_OUT, Produced.with(Serdes.String(), Serdes.Long()));
 
-        KafkaStreams streams = new KafkaStreams(builder.build(), config);
+        Topology topology = builder.build();
+        KafkaStreams streams = new KafkaStreams(topology, config);
 
         // Nie używać na produkcji, czyści stan strumieni
         // streams.cleanUp();
 
         // start Kafka Streams
         streams.start();
+
+        // Print topology
+        while(true){
+            System.out.println("TOPOLOGY:");
+            System.out.println(topology.describe());
+            try {
+                Thread.sleep(10000);
+            } catch (InterruptedException e) {
+                break;
+            }
+        }
 
         // jeśli chcemy zamknać aplikację po jakimś czasie to najprościej dajemy sleep i close
         // Thread.sleep(5000L);

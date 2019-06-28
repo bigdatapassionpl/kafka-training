@@ -1,35 +1,44 @@
 package com.bigdatapassion.prodcon;
 
+import com.bigdatapassion.callback.LoggerCallback;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.Producer;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.apache.log4j.Logger;
-import com.bigdatapassion.callback.LoggerCallback;
+
+import java.util.Random;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import static com.bigdatapassion.KafkaConfigurationFactory.*;
 
 public class KafkaProducerExample {
 
     private static final Logger LOGGER = Logger.getLogger(KafkaProducerExample.class);
-    private static int MESSAGE_ID = 1;
+    private static final AtomicInteger MESSAGE_ID = new AtomicInteger(1);
+    private static final String[] MESSAGES = {"Ala ma kota, Ela ma psa", "W Szczebrzeszynie chrząszcz brzmi w trzcinie", "Być albo nie być"};
 
     public static void main(String[] args) {
 
         Producer<String, String> producer = new KafkaProducer<>(createProducerConfig());
 
         LoggerCallback callback = new LoggerCallback();
+        Random random = new Random(System.currentTimeMillis());
 
         try {
             while (true) {
 
                 for (long i = 0; i < 10; i++) {
-                    ProducerRecord<String, String> data = new ProducerRecord<>(TOPIC, "key-" + MESSAGE_ID, " Ala ma kota, Ela ma psa");
+
+                    int id = random.nextInt(MESSAGES.length);
+                    String key = "key-" + id;
+                    String value = MESSAGES[id];
+                    ProducerRecord<String, String> data = new ProducerRecord<>(TOPIC, key, value);
 
                     producer.send(data, callback); // async with callback
                     // producer.send(data); // async without callback
                     // producer.send(data).get(); // sync send
 
-                    MESSAGE_ID++;
+                    MESSAGE_ID.getAndIncrement();
                 }
 
                 LOGGER.info("Sended messages");

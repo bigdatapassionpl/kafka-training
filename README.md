@@ -21,7 +21,7 @@ export TOPIC_OUT=test-topic-out
 ### Stworzenie topicu
 ~~~bash
 bin/kafka-topics.sh --create --zookeeper $KAFKA_ZOOKEEPER \
-    --replication-factor 1 --partitions 1 --topic $TOPIC
+    --replication-factor 2 --partitions 3 --topic $TOPIC
 ~~~
 
 
