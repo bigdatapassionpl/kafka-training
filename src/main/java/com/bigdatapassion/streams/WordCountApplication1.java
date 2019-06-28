@@ -21,11 +21,12 @@ public class WordCountApplication1 {
 
         StreamsBuilder builder = new StreamsBuilder();
 
-        KStream<String, String> textLines = builder.stream(TOPIC);
+        KStream<String, String> inputStreamWithMessages = builder.stream(TOPIC);
 
-        KTable<String, Long> wordCountTable = textLines
+        KTable<String, Long> wordCountTable = inputStreamWithMessages
                 .mapValues((ValueMapper<String, String>) String::toLowerCase)
                 .flatMapValues(textLine -> Arrays.asList(textLine.split(PATTERN)))
+                .through(TOPIC_THROUGH)
                 //.map((key, value) -> new KeyValue<>(value, value))
                 .selectKey((key, value) -> value)
 //                .peek((key, value) -> System.out.println(String.format("(key:%s -> value:%s)", key, value)))
@@ -48,15 +49,6 @@ public class WordCountApplication1 {
         // Print topology
         System.out.println("TOPOLOGY:");
         System.out.println(topology.describe());
-        while (true) {
-//            System.out.println("TOPOLOGY:");
-//            System.out.println(topology.describe());
-            try {
-                Thread.sleep(10000);
-            } catch (InterruptedException e) {
-                break;
-            }
-        }
 
         // jeśli chcemy zamknać aplikację po jakimś czasie to najprościej dajemy sleep i close
         // Thread.sleep(5000L);
