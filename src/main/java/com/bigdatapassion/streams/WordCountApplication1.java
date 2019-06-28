@@ -23,8 +23,11 @@ public class WordCountApplication1 {
         KStream<String, String> textLines = builder.stream(TOPIC);
 
         KTable<String, Long> wordCountTable = textLines
-                .flatMapValues(textLine -> Arrays.asList(textLine.toLowerCase().split(PATTERN)))
-                .groupBy((key, word) -> word)
+                .mapValues((ValueMapper<String, String>) String::toLowerCase)
+                .flatMapValues(textLine -> Arrays.asList(textLine.split(PATTERN)))
+                //.map((key, value) -> new KeyValue<>(value, value))
+                .selectKey((key, value) -> value)
+                .groupByKey()
                 .count(Materialized.as("counts-store"));
 
         KStream<String, Long> wordCountStream = wordCountTable.toStream();

@@ -2,7 +2,6 @@ package com.bigdatapassion.streams;
 
 import org.apache.kafka.common.serialization.Serdes;
 import org.apache.kafka.streams.KafkaStreams;
-import org.apache.kafka.streams.KeyValue;
 import org.apache.kafka.streams.StreamsBuilder;
 import org.apache.kafka.streams.kstream.KStream;
 import org.apache.kafka.streams.kstream.KTable;
@@ -29,9 +28,7 @@ public class WordCountApplication2 {
 
         KTable<String, Long> wordCountTable = textLines
                 .flatMapValues(value -> Arrays.asList(PATTERN.split(value.toLowerCase())))
-                .map((key, value) -> new KeyValue<>(value, value))
-                // .filter((key, value) -> (!value.equals("ma")))
-                .groupByKey()
+                .groupBy((key, word) -> word)
                 .count(Materialized.as("counts-store"));
 
         KStream<String, Long> wordCountStream = wordCountTable.toStream();
