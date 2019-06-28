@@ -15,7 +15,7 @@ public class KafkaProducerExample {
 
     private static final Logger LOGGER = Logger.getLogger(KafkaProducerExample.class);
     private static final AtomicInteger MESSAGE_ID = new AtomicInteger(1);
-    private static final String[] MESSAGES = {"Ala ma kota, Ela ma psa", "W Szczebrzeszynie chrząszcz brzmi w trzcinie", "Być albo nie być"};
+    private static final String[] MESSAGES = {"Ala ma kota, Ela ma psa", "W Szczebrzeszynie chrzaszcz brzmi w trzcinie", "Byc albo nie byc"};
 
     public static void main(String[] args) {
 

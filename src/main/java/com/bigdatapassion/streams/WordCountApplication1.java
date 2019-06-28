@@ -28,6 +28,7 @@ public class WordCountApplication1 {
                 .flatMapValues(textLine -> Arrays.asList(textLine.split(PATTERN)))
                 //.map((key, value) -> new KeyValue<>(value, value))
                 .selectKey((key, value) -> value)
+                .peek((key, value) -> System.out.println(String.format("(key:%s -> value:%s)", key, value)))
                 .groupByKey()
                 .count(Materialized.as("counts-store"));
 
@@ -45,7 +46,7 @@ public class WordCountApplication1 {
         streams.start();
 
         // Print topology
-        while(true){
+        while (true) {
             System.out.println("TOPOLOGY:");
             System.out.println(topology.describe());
             try {
