@@ -58,10 +58,11 @@ public class KafkaConfigurationFactory {
         producerConfig.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
 
         producerConfig.put(ProducerConfig.ACKS_CONFIG, "all");
-        producerConfig.put(ProducerConfig.RETRIES_CONFIG, 0);
+        producerConfig.put(ProducerConfig.RETRIES_CONFIG, "3");
+        producerConfig.put(ProducerConfig.LINGER_MS_CONFIG, "1");
+        producerConfig.put(ProducerConfig.ENABLE_IDEMPOTENCE_CONFIG, "true"); // no duplicated messages
         // producerConfig.put(ProducerConfig.COMPRESSION_TYPE_CONFIG, "none");
         // producerConfig.put(ProducerConfig.BATCH_SIZE_CONFIG, "16384");
-        // producerConfig.put(ProducerConfig.LINGER_MS_CONFIG, "1");
 
         return producerConfig;
     }
