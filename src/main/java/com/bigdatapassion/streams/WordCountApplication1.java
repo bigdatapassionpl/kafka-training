@@ -50,6 +50,9 @@ public class WordCountApplication1 {
         System.out.println("TOPOLOGY:");
         System.out.println(topology.describe());
 
+        System.out.println("TOPOLOGY:");
+        streams.localThreadsMetadata().forEach(System.out::println);
+
         // jeśli chcemy zamknać aplikację po jakimś czasie to najprościej dajemy sleep i close
         // Thread.sleep(5000L);
         // streams.close();
