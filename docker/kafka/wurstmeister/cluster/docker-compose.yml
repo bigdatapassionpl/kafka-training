@@ -52,6 +52,23 @@ services:
       depends_on:
         - kafka2
 
+  kafka-manager:
+      container_name: kafka_manager
+      image: sheepkiller/kafka-manager
+      ports:
+        - "9000:9000"
+      hostname: kafka_manager
+      networks:
+        - kafkanetwork
+      environment:
+          ZK_HOSTS: cluster_zookeeper:2181
+          APPLICATION_SECRET: letmein
+          KM_ARGS: -Djava.net.preferIPv4Stack=true
+      depends_on:
+        - kafka3
+
+
+
 networks:
   kafkanetwork:
     driver: bridge
