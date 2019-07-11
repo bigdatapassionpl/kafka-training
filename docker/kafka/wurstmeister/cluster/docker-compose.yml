@@ -54,7 +54,7 @@ services:
 
   kafka-manager:
       container_name: kafka_manager
-      image: sheepkiller/kafka-manager
+      image: solsson/kafka-manager
       ports:
         - "9000:9000"
       hostname: kafka_manager
