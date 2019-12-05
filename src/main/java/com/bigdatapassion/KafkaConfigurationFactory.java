@@ -11,7 +11,7 @@ import java.util.Properties;
 
 public class KafkaConfigurationFactory {
 
-    public static final String KAFKA_SERVER = "cluster_kafka1:9092,cluster_kafka2:9092,cluster_kafka3:9092";
+    public static final String KAFKA_SERVER = "cluster_kafka1:9092";
     // public static final String KAFKA_SERVER = "localhost:6667";
     // public static final String KAFKA_SERVER = "localhost:9092";
     // public static final String KAFKA_SERVER = "hdp1:6667,hdp2:6667,hdp3:6667";
@@ -59,6 +59,8 @@ public class KafkaConfigurationFactory {
         producerConfig.put(ProducerConfig.ENABLE_IDEMPOTENCE_CONFIG, "true"); // no duplicated messages
         // producerConfig.put(ProducerConfig.COMPRESSION_TYPE_CONFIG, "none");
         // producerConfig.put(ProducerConfig.BATCH_SIZE_CONFIG, "16384");
+
+        producerConfig.put(ProducerConfig.MAX_REQUEST_SIZE_CONFIG, "10485760"); // 10MB
 
         return producerConfig;
     }
