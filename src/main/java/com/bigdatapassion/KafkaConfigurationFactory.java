@@ -17,10 +17,6 @@ public class KafkaConfigurationFactory {
     // public static final String KAFKA_SERVER = "hdp1:6667,hdp2:6667,hdp3:6667";
     // public static final String KAFKA_SERVER = "hdpoc1:6667,hdpoc2:6667,hdpoc3:6667";
 
-    // public static final String ZOOKEEPER_SERVER = "cluster_zookeeper:2181";
-    // public static final String ZOOKEEPER_SERVER = "localhost:2181";
-    // public static final String ZOOKEEPER_SERVER = "hdp1:2181,hdp2:2181,hdp3:2181";
-
     public static final String TOPIC = "input-topic";
     public static final String TOPIC_OUT = "output-topic";
     public static final String TOPIC_THROUGH = "through-topic";

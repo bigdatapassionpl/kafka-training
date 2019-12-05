@@ -36,6 +36,11 @@
             <artifactId>scala-library</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+        </dependency>
+
         <!--Twitter-->
         <dependency>
             <groupId>com.twitter</groupId>
