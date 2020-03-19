@@ -21,6 +21,9 @@ public class KafkaConsumerManualOffset {
 
     private static final Logger LOGGER = Logger.getLogger(KafkaConsumerManualOffset.class);
 
+    private static final long gapTime = 10;
+    private static final long windowTime = 10;
+
     public static void main(String[] args) {
 
         KafkaConsumer<String, String> consumer = new KafkaConsumer<>(createConsumerConfig());
@@ -45,17 +48,17 @@ public class KafkaConsumerManualOffset {
                     List<ConsumerRecord<String, String>> partitionRecords = records.records(partition);
                     for (ConsumerRecord<String, String> record : partitionRecords) {
 
-                        System.out.printf("Received Message topic = %s, partition = %s, offset = %d, key = %s, value = %s\n",
-                                record.topic(), record.partition(), record.offset(), record.key(), record.value());
+                        System.out.printf("Received Message topic = %s, partition = %s, offset = %d, time = %s, key = %s, value = %s\n",
+                                record.topic(), record.partition(), record.offset(), printDateFromTimestamp(record.timestamp()), record.key(), record.value());
 
                     }
                     long lastOffset = partitionRecords.get(partitionRecords.size() - 1).offset();
                     long nextOffset = lastOffset;
-//                    System.out.println(partition + " : " + nextOffset);
                     nextPositions.put(partition, nextOffset);
                     consumer.commitSync(Collections.singletonMap(partition, new OffsetAndMetadata(nextOffset)));
                 }
 
+                Thread.sleep(gapTime * 1000);
             }
         } catch (Exception e) {
             LOGGER.error("Błąd...", e);
@@ -63,6 +66,18 @@ public class KafkaConsumerManualOffset {
             consumer.commitSync(); // sync commit
             consumer.close();
         }
+    }
+
+    private static String printDateFromTimestamp(final long timestamp) {
+        Calendar cal = Calendar.getInstance();
+        cal.setTimeZone(TimeZone.getDefault());
+        cal.setTimeInMillis(timestamp);
+        return (cal.get(Calendar.YEAR) + "-"
+                + (cal.get(Calendar.MONTH) + 1) + "-"
+                + cal.get(Calendar.DAY_OF_MONTH) + " "
+                + cal.get(Calendar.HOUR_OF_DAY) + ":"
+                + cal.get(Calendar.MINUTE) + ":"
+                + cal.get(Calendar.SECOND));
     }
 
 }

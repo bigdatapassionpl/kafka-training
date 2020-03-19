@@ -23,7 +23,7 @@ public class KafkaConfigurationFactory {
     public static final String CONSUMER_GROUP = "my-group";
 
     public static final int TIMEOUT = 10000;
-    public static final int SLEEP = 5000;
+    public static final int SLEEP = 1000;
     public static final int MESSAGE_BATCH_COUNT = 1;
 
     /**
