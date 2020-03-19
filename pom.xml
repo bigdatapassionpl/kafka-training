@@ -41,6 +41,13 @@
             <artifactId>commons-io</artifactId>
         </dependency>
 
+        <!-- Spring Kafka-->
+        <dependency>
+            <groupId>org.springframework.kafka</groupId>
+            <artifactId>spring-kafka</artifactId>
+            <version>2.4.4.RELEASE</version>
+        </dependency>
+
         <!--Twitter-->
         <dependency>
             <groupId>com.twitter</groupId>
