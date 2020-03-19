@@ -27,7 +27,7 @@ public class KafkaProducerExample {
         try {
             while (true) {
 
-                for (long i = 0; i < 10; i++) {
+                for (long i = 0; i < MESSAGE_BATCH_COUNT; i++) {
 
                     int id = random.nextInt(MESSAGES.length);
                     String key = "key-" + id;
