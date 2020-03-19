@@ -1,11 +1,13 @@
 package com.bigdatapassion.prodcon;
 
+import com.bigdatapassion.listener.ConsumerRebalanceLoggerListener;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
 import org.apache.log4j.Logger;
-import com.bigdatapassion.listener.ConsumerRebalanceLoggerListener;
 
+import java.time.Duration;
+import java.time.temporal.ChronoUnit;
 import java.util.Collections;
 
 import static com.bigdatapassion.KafkaConfigurationFactory.*;
@@ -27,7 +29,7 @@ public class KafkaConsumerExample {
         try {
             while (true) {
 
-                ConsumerRecords<String, String> records = consumer.poll(TIMEOUT);
+                ConsumerRecords<String, String> records = consumer.poll(Duration.of(TIMEOUT, ChronoUnit.MILLIS));
                 if (records.count() > 0) {
                     LOGGER.info("Poll records: " + records.count());
 
