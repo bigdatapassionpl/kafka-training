@@ -21,8 +21,8 @@ public class KafkaConsumerManualOffset {
 
     private static final Logger LOGGER = Logger.getLogger(KafkaConsumerManualOffset.class);
 
-    private static final long gapTime = 10;
-    private static final long windowTime = 10;
+    private static final long gapTimeMilis = 10 * 1000;
+    private static final long windowTimeMilis = 30 * 1000;
 
     public static void main(String[] args) {
 
@@ -35,6 +35,9 @@ public class KafkaConsumerManualOffset {
         try {
             while (true) {
 
+                // Window end
+                long currentTimeMillis = System.currentTimeMillis();
+
                 // Moving to offset
                 Set<TopicPartition> assignment = consumer.assignment();
                 for (TopicPartition partition : assignment) {
@@ -45,20 +48,38 @@ public class KafkaConsumerManualOffset {
                 // Reading partitions
                 ConsumerRecords<String, String> records = consumer.poll(Duration.of(TIMEOUT, ChronoUnit.MILLIS));
                 for (TopicPartition partition : records.partitions()) {
+
                     List<ConsumerRecord<String, String>> partitionRecords = records.records(partition);
+                    long nextOffset = 0;
                     for (ConsumerRecord<String, String> record : partitionRecords) {
 
                         System.out.printf("Received Message topic = %s, partition = %s, offset = %d, time = %s, key = %s, value = %s\n",
                                 record.topic(), record.partition(), record.offset(), printDateFromTimestamp(record.timestamp()), record.key(), record.value());
 
+                        long distance = currentTimeMillis - record.timestamp();
+                        if (distance <= gapTimeMilis) {
+                            // new events
+                            System.out.println("New");
+                        } else if (distance <= windowTimeMilis) {
+                            // window events
+                            System.out.println("Window");
+                            nextOffset = record.offset();
+                        } else {
+                            // very old events ...
+                            System.out.println("History events");
+                        }
+
                     }
-                    long lastOffset = partitionRecords.get(partitionRecords.size() - 1).offset();
-                    long nextOffset = lastOffset;
+
+                    if (nextOffset <= 0) {
+                        nextOffset = partitionRecords.get(partitionRecords.size() - 1).offset() + 1;
+                    }
+
                     nextPositions.put(partition, nextOffset);
                     consumer.commitSync(Collections.singletonMap(partition, new OffsetAndMetadata(nextOffset)));
                 }
 
-                Thread.sleep(gapTime * 1000);
+                Thread.sleep(gapTimeMilis);
             }
         } catch (Exception e) {
             LOGGER.error("Błąd...", e);
