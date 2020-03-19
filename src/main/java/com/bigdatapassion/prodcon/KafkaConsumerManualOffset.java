@@ -10,8 +10,7 @@ import org.apache.log4j.Logger;
 
 import java.time.Duration;
 import java.time.temporal.ChronoUnit;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 import static com.bigdatapassion.KafkaConfigurationFactory.*;
 
@@ -29,9 +28,18 @@ public class KafkaConsumerManualOffset {
         consumer.subscribe(Collections.singletonList(TOPIC), new ConsumerRebalanceLoggerListener());
         // consumer.subscribe(Arrays.asList(TOPIC, TOPIC2), new ConsumerRebalanceLoggerListener());
 
+        Map<TopicPartition, Long> nextPositions = new HashMap<>();
         try {
             while (true) {
 
+                // Moving to offset
+                Set<TopicPartition> assignment = consumer.assignment();
+                for (TopicPartition partition : assignment) {
+                    Long nextPosition = nextPositions.get(partition);
+                    consumer.seek(partition, nextPosition);
+                }
+
+                // Reading partitions
                 ConsumerRecords<String, String> records = consumer.poll(Duration.of(TIMEOUT, ChronoUnit.MILLIS));
                 for (TopicPartition partition : records.partitions()) {
                     List<ConsumerRecord<String, String>> partitionRecords = records.records(partition);
@@ -42,7 +50,10 @@ public class KafkaConsumerManualOffset {
 
                     }
                     long lastOffset = partitionRecords.get(partitionRecords.size() - 1).offset();
-                    consumer.commitSync(Collections.singletonMap(partition, new OffsetAndMetadata(lastOffset + 1)));
+                    long nextOffset = lastOffset;
+//                    System.out.println(partition + " : " + nextOffset);
+                    nextPositions.put(partition, nextOffset);
+                    consumer.commitSync(Collections.singletonMap(partition, new OffsetAndMetadata(nextOffset)));
                 }
 
             }

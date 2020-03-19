@@ -23,7 +23,7 @@ public class KafkaConfigurationFactory {
     public static final String CONSUMER_GROUP = "my-group";
 
     public static final int TIMEOUT = 10000;
-    public static final int SLEEP = 1000;
+    public static final int SLEEP = 5000;
     public static final int MESSAGE_BATCH_COUNT = 1;
 
     /**
@@ -38,7 +38,7 @@ public class KafkaConfigurationFactory {
         consumerConfig.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class.getName());
 
         consumerConfig.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest");
-        consumerConfig.put(ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG, true); // if true manual commit is no needed
+        consumerConfig.put(ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG, false); // if true manual commit is no needed
 
         return consumerConfig;
     }
