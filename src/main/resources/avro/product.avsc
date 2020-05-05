@@ -1,0 +1,9 @@
+{
+     "type": "record",
+     "namespace": "com.bigdatapassion",
+     "name": "Product",
+     "fields": [
+       { "name": "name", "type": "string", "doc": "Product name" },
+       { "name": "price", "type": "double", "doc": "Product price" }
+     ]
+}
