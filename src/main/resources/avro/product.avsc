@@ -2,6 +2,7 @@
      "type": "record",
      "namespace": "com.bigdatapassion",
      "name": "Product",
+     "doc": "Avro Schema for company products",
      "fields": [
        { "name": "name", "type": "string", "doc": "Product name" },
        { "name": "price", "type": "double", "doc": "Product price" }
