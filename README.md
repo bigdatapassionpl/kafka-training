@@ -1,4 +1,13 @@
 
+# Apache Kafka Training
+
+Projekt z przykładami kodu z Apache Kafka
+Stworzony przez BigDataPassion.pl
+
+## Obrazy Docker używane w kursie
+https://github.com/bigdatapassionpl/big-data-devops
+
+
 ### Docker
 bash kontenera
 ~~~bash
