@@ -30,6 +30,12 @@
             <artifactId>kafka-streams</artifactId>
         </dependency>
 
+        <!-- Confluent-->
+        <dependency>
+            <groupId>io.confluent</groupId>
+            <artifactId>kafka-avro-serializer</artifactId>
+        </dependency>
+
         <!-- Avro -->
         <dependency>
             <groupId>org.apache.avro</groupId>
