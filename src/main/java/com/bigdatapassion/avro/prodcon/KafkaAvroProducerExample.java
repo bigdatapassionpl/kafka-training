@@ -13,6 +13,7 @@ import java.util.Random;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import static com.bigdatapassion.KafkaConfigurationFactory.*;
+import static org.apache.commons.math3.util.Precision.round;
 
 public class KafkaAvroProducerExample {
 
@@ -38,7 +39,7 @@ public class KafkaAvroProducerExample {
                     String key = "key-" + id;
                     Product value = Product.newBuilder()
                             .setName("Product " + id)
-                            .setPrice(random.nextDouble())
+                            .setPrice(round(100 * random.nextDouble(), 2))
                             .build();
                     ProducerRecord<String, Product> data = new ProducerRecord<>(TOPIC_AVRO, key, value);
 
