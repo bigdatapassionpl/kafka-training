@@ -11,7 +11,7 @@ import java.util.Properties;
 
 public class KafkaConfigurationFactory {
 
-    public static final String KAFKA_SERVER = "kafka1:9092";
+    public static final String KAFKA_SERVER = "broker1:9092";
     // public static final String KAFKA_SERVER = "localhost:6667";
     // public static final String KAFKA_SERVER = "localhost:9092";
     // public static final String KAFKA_SERVER = "hdp1:6667,hdp2:6667,hdp3:6667";

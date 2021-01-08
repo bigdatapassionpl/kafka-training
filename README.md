@@ -27,6 +27,13 @@ export TOPIC=input-topic
 export TOPIC_OUT=output-topic
 ~~~
 
+~~~bash
+export KAFKA_ZOOKEEPER=zookeeper:2181
+export KAFKA_BROKER=broker1:9092,broker2:9092,broker3:9092
+export TOPIC=input-topic
+export TOPIC_OUT=output-topic
+~~~
+
 
 
 ### Stworzenie topicu
