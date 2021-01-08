@@ -13,6 +13,8 @@ bash kontenera
 ~~~bash
 docker exec -it cluster_kafka1 bash
 cd /opt/kafka/
+
+docker exec -it --user root broker bash
 ~~~
 
 
