@@ -3,6 +3,7 @@ package com.bigdatapassion.streams;
 import org.apache.kafka.common.serialization.Serdes;
 import org.apache.kafka.streams.KafkaStreams;
 import org.apache.kafka.streams.StreamsBuilder;
+import org.apache.kafka.streams.StreamsConfig;
 import org.apache.kafka.streams.Topology;
 import org.apache.kafka.streams.kstream.*;
 
@@ -18,6 +19,7 @@ public class WordCountApplication1 {
     public static void main(final String[] args) {
 
         Properties config = getStreamConfig();
+        config.put(StreamsConfig.APPLICATION_ID_CONFIG, "wordcount");
 
         StreamsBuilder builder = new StreamsBuilder();
 

@@ -3,7 +3,6 @@ package com.bigdatapassion.avro.prodcon;
 import com.bigdatapassion.Product;
 import com.bigdatapassion.listener.ConsumerRebalanceLoggerListener;
 import io.confluent.kafka.serializers.KafkaAvroDeserializer;
-import io.confluent.kafka.serializers.KafkaAvroSerializer;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
@@ -27,7 +26,7 @@ public class KafkaAvroConsumerExample {
 
         Properties consumerConfig = createConsumerConfig();
         consumerConfig.setProperty("value.deserializer", KafkaAvroDeserializer.class.getName());
-        consumerConfig.setProperty("schema.registry.url", "http://schema-registry:8085/");
+        consumerConfig.setProperty("schema.registry.url", KAFKA_SCHEMA_REGISTRY);
         KafkaConsumer<String, Product> consumer = new KafkaConsumer<>(consumerConfig);
 
         consumer.subscribe(Collections.singletonList(TOPIC_AVRO), new ConsumerRebalanceLoggerListener());

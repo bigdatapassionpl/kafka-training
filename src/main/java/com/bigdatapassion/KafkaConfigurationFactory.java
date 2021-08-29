@@ -11,11 +11,10 @@ import java.util.Properties;
 
 public class KafkaConfigurationFactory {
 
-    public static final String KAFKA_SERVER = "broker1:9092";
-    // public static final String KAFKA_SERVER = "localhost:6667";
-    // public static final String KAFKA_SERVER = "localhost:9092";
-    // public static final String KAFKA_SERVER = "hdp1:6667,hdp2:6667,hdp3:6667";
-    // public static final String KAFKA_SERVER = "hdpoc1:6667,hdpoc2:6667,hdpoc3:6667";
+    public static final String KAFKA_SERVER = "broker1:9092,broker2:9092,broker3:9092";
+    // public static final String KAFKA_SERVER = "localhost:6667"; -> Hortonworks default port
+    // public static final String KAFKA_SERVER = "localhost:9092"; --> use with one broker on localhost
+    public static final String KAFKA_SCHEMA_REGISTRY = "http://schema-registry:8081/";
 
     public static final String TOPIC = "input-topic";
     public static final String TOPIC_AVRO = "product-topic";
@@ -56,9 +55,9 @@ public class KafkaConfigurationFactory {
         producerConfig.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
 
         producerConfig.put(ProducerConfig.ACKS_CONFIG, "all");
-        producerConfig.put(ProducerConfig.RETRIES_CONFIG, "10");
+        producerConfig.put(ProducerConfig.RETRIES_CONFIG, Integer.MAX_VALUE);
+        producerConfig.put(ProducerConfig.ENABLE_IDEMPOTENCE_CONFIG, "true"); // no duplicated messages
         // producerConfig.put(ProducerConfig.LINGER_MS_CONFIG, "1");
-        // producerConfig.put(ProducerConfig.ENABLE_IDEMPOTENCE_CONFIG, "true"); // no duplicated messages
         // producerConfig.put(ProducerConfig.COMPRESSION_TYPE_CONFIG, "none");
         // producerConfig.put(ProducerConfig.BATCH_SIZE_CONFIG, "16384");
         // producerConfig.put(ProducerConfig.MAX_REQUEST_SIZE_CONFIG, "10485760"); // 10MB
@@ -72,14 +71,16 @@ public class KafkaConfigurationFactory {
     public static Properties getStreamConfig() {
         Properties config = new Properties();
         config.put(StreamsConfig.BOOTSTRAP_SERVERS_CONFIG, KAFKA_SERVER);
-        config.put(StreamsConfig.APPLICATION_ID_CONFIG, "wordcount");
+        config.put(StreamsConfig.APPLICATION_ID_CONFIG, "unknown-application-id");
 
         config.put(StreamsConfig.DEFAULT_KEY_SERDE_CLASS_CONFIG, Serdes.String().getClass().getName());
         config.put(StreamsConfig.DEFAULT_VALUE_SERDE_CLASS_CONFIG, Serdes.String().getClass().getName());
 
-        config.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest");
         config.put(StreamsConfig.PROCESSING_GUARANTEE_CONFIG, StreamsConfig.EXACTLY_ONCE);
         // config.put(StreamsConfig.COMMIT_INTERVAL_MS_CONFIG, 100);
+
+        // consumer config
+        config.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest");
 
         // turn off cache, not recommended in prod
         // config.put(StreamsConfig.CACHE_MAX_BYTES_BUFFERING_CONFIG, "0");

@@ -24,7 +24,7 @@ public class KafkaAvroProducerExample {
 
         Properties producerConfig = createProducerConfig();
         producerConfig.setProperty("value.serializer", KafkaAvroSerializer.class.getName());
-        producerConfig.setProperty("schema.registry.url", "http://schema-registry:8085/");
+        producerConfig.setProperty("schema.registry.url", KAFKA_SCHEMA_REGISTRY);
         Producer<String, Product> producer = new KafkaProducer<>(producerConfig);
 
         LoggerCallback callback = new LoggerCallback();
