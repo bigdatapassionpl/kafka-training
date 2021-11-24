@@ -8,7 +8,7 @@ import org.apache.kafka.clients.producer.ProducerRecord;
 import java.util.Properties;
 
 import static com.bigdatapassion.kafka.conf.KafkaConfigurationFactory.KAFKA_SCHEMA_REGISTRY;
-import static com.bigdatapassion.kafka.conf.KafkaConfigurationFactory.TEST_PRODUCT;
+import static com.bigdatapassion.kafka.conf.KafkaConfigurationFactory.TOPIC_PRODUCT;
 
 public class KafkaProductAvroProducer extends KafkaProducerApp<String, ProductMessageAvro> {
 
@@ -31,7 +31,7 @@ public class KafkaProductAvroProducer extends KafkaProducerApp<String, ProductMe
 
         ProductMessageAvro productMessage = factory.generateNextMessage(messageId);
 
-        return new ProducerRecord<>(TEST_PRODUCT, productMessage.getId().toString(), productMessage);
+        return new ProducerRecord<>(TOPIC_PRODUCT, productMessage.getId().toString(), productMessage);
     }
 
 }

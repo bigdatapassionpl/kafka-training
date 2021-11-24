@@ -31,4 +31,13 @@ public class PersonMessage {
         this.person = person;
     }
 
+    @Override
+    public String toString() {
+        return "PersonMessage{" +
+                "id=" + id +
+                ", creationDate='" + creationDate + '\'' +
+                ", person=" + person +
+                '}';
+    }
+
 }

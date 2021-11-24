@@ -7,7 +7,7 @@ import org.apache.kafka.streams.Topology;
 
 import java.util.Properties;
 
-import static com.bigdatapassion.kafka.conf.KafkaConfigurationFactory.getStreamConfig;
+import static com.bigdatapassion.kafka.conf.KafkaConfigurationFactory.createStreamConfig;
 import static com.google.common.base.CaseFormat.LOWER_CAMEL;
 import static com.google.common.base.CaseFormat.LOWER_HYPHEN;
 
@@ -17,7 +17,7 @@ public abstract class KafkaStreamsApp {
 
         StreamsBuilder builder = new StreamsBuilder();
 
-        Properties streamConfig = createStreamsProperties();
+        Properties streamConfig = createStreamProperties();
 
         // Building topology (data flow)
         createTopology(builder);
@@ -35,6 +35,8 @@ public abstract class KafkaStreamsApp {
         streams.start(); // start Kafka Streams App
 
         // Print topology
+        System.out.println("Kafka Streams Topology Visualizer: https://zz85.github.io/kafka-streams-viz/");
+
         System.out.println("TOPOLOGY:");
         System.out.println(topology.describe());
 
@@ -52,8 +54,8 @@ public abstract class KafkaStreamsApp {
         Runtime.getRuntime().addShutdownHook(new Thread(streams::close));
     }
 
-    protected Properties createStreamsProperties() {
-        Properties streamConfig = getStreamConfig();
+    protected Properties createStreamProperties() {
+        Properties streamConfig = createStreamConfig();
         String applicationId = LOWER_CAMEL.to(LOWER_HYPHEN, SimpleWordCountStream.class.getSimpleName());
         streamConfig.put(StreamsConfig.APPLICATION_ID_CONFIG, applicationId);
         return streamConfig;

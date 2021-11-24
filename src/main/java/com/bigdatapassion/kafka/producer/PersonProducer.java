@@ -1,14 +1,14 @@
 package com.bigdatapassion.kafka.producer;
 
-import com.bigdatapassion.kafka.dto.PersonMessage;
 import com.bigdatapassion.kafka.datafactory.PersonMessageFactory;
+import com.bigdatapassion.kafka.dto.PersonMessage;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.springframework.kafka.support.serializer.JsonSerializer;
 
 import java.util.Properties;
 
-import static com.bigdatapassion.kafka.conf.KafkaConfigurationFactory.TOPIC_SIMPLE;
+import static com.bigdatapassion.kafka.conf.KafkaConfigurationFactory.TOPIC_PERSON;
 
 public class PersonProducer extends KafkaProducerApp<String, PersonMessage> {
 
@@ -21,7 +21,7 @@ public class PersonProducer extends KafkaProducerApp<String, PersonMessage> {
     @Override
     protected ProducerRecord<String, PersonMessage> createRecord(long messageId) {
         PersonMessage value = messageFactory.generateNextMessage(messageId);
-        return new ProducerRecord<>(TOPIC_SIMPLE, value.getId().toString(), value);
+        return new ProducerRecord<>(TOPIC_PERSON, value.getId().toString(), value);
     }
 
     @Override

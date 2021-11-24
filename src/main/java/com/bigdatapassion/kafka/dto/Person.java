@@ -66,4 +66,17 @@ public class Person {
         this.country = country;
     }
 
+    @Override
+    public String toString() {
+        return "Person{" +
+                "name='" + name + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", streetName='" + streetName + '\'' +
+                ", number='" + number + '\'' +
+                ", city='" + city + '\'' +
+                ", country='" + country + '\'' +
+                ", animal='" + animal + '\'' +
+                '}';
+    }
+
 }

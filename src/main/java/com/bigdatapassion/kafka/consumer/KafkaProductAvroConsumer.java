@@ -7,7 +7,7 @@ import org.apache.log4j.Logger;
 import java.util.Properties;
 
 import static com.bigdatapassion.kafka.conf.KafkaConfigurationFactory.KAFKA_SCHEMA_REGISTRY;
-import static com.bigdatapassion.kafka.conf.KafkaConfigurationFactory.TEST_PRODUCT;
+import static com.bigdatapassion.kafka.conf.KafkaConfigurationFactory.TOPIC_PRODUCT;
 
 /**
  * The consumer is designed to be run in its own thread!!!
@@ -17,7 +17,7 @@ public class KafkaProductAvroConsumer extends KafkaConsumerApp<String, ProductMe
     private static final Logger LOGGER = Logger.getLogger(KafkaProductAvroConsumer.class);
 
     protected KafkaProductAvroConsumer() {
-        super(TEST_PRODUCT);
+        super(TOPIC_PRODUCT);
     }
 
     @Override

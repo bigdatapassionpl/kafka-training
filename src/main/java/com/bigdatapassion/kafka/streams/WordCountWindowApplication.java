@@ -9,7 +9,7 @@ import java.util.Properties;
 import java.util.regex.Pattern;
 
 import static com.bigdatapassion.kafka.conf.KafkaConfigurationFactory.TOPIC_SIMPLE;
-import static com.bigdatapassion.kafka.conf.KafkaConfigurationFactory.getStreamConfig;
+import static com.bigdatapassion.kafka.conf.KafkaConfigurationFactory.createStreamConfig;
 
 public class WordCountWindowApplication {
 
@@ -17,7 +17,7 @@ public class WordCountWindowApplication {
 
     public static void main(String[] args) {
 
-        Properties config = getStreamConfig();
+        Properties config = createStreamConfig();
 
         StreamsBuilder builder = new StreamsBuilder();
 

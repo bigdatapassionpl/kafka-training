@@ -18,8 +18,10 @@ public class KafkaConfigurationFactory {
     public static final String TOPIC_SIMPLE_WORDCOUNT = "test-simple-wordcount";
     public static final String TOPIC_THROUGH = "test-wordcount-through";
 
-    public static final String TEST_PERSON = "test-person"; //json topic
-    public static final String TEST_PRODUCT = "test-product"; //avro topic
+    public static final String TOPIC_PERSON = "test-person"; //json topic
+    public static final String TOPIC_PERSON_FILTERED = "test-person-filtered"; //json topic
+
+    public static final String TOPIC_PRODUCT = "test-product"; //avro topic
 
     public static final String CONSUMER_GROUP = "my-group";
 
@@ -69,7 +71,7 @@ public class KafkaConfigurationFactory {
     /**
      * https://kafka.apache.org/documentation/#streamsconfigs
      */
-    public static Properties getStreamConfig() {
+    public static Properties createStreamConfig() {
         Properties streamConfig = new Properties();
         streamConfig.put(StreamsConfig.BOOTSTRAP_SERVERS_CONFIG, KAFKA_SERVER);
         streamConfig.put(StreamsConfig.APPLICATION_ID_CONFIG, "unknown-application-id");
