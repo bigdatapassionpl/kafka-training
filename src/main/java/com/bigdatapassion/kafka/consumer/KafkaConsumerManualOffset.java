@@ -28,7 +28,7 @@ public class KafkaConsumerManualOffset {
 
         KafkaConsumer<String, String> consumer = new KafkaConsumer<>(createConsumerConfig());
 
-        consumer.subscribe(Collections.singletonList(TOPIC), new ConsumerRebalanceLoggerListener());
+        consumer.subscribe(Collections.singletonList(TOPIC_SIMPLE), new ConsumerRebalanceLoggerListener());
         // consumer.subscribe(Arrays.asList(TOPIC, TOPIC2), new ConsumerRebalanceLoggerListener());
 
         Map<TopicPartition, Long> nextPositions = new HashMap<>();

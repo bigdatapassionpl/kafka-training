@@ -8,7 +8,7 @@ import java.util.Arrays;
 import java.util.Properties;
 import java.util.regex.Pattern;
 
-import static com.bigdatapassion.kafka.conf.KafkaConfigurationFactory.TOPIC;
+import static com.bigdatapassion.kafka.conf.KafkaConfigurationFactory.TOPIC_SIMPLE;
 import static com.bigdatapassion.kafka.conf.KafkaConfigurationFactory.getStreamConfig;
 
 public class WordCountWindowApplication {
@@ -21,7 +21,7 @@ public class WordCountWindowApplication {
 
         StreamsBuilder builder = new StreamsBuilder();
 
-        KStream<String, String> textLines = builder.stream(TOPIC);
+        KStream<String, String> textLines = builder.stream(TOPIC_SIMPLE);
 
         KTable<Windowed<String>, Long> wordCountTable = textLines
                 .flatMapValues(value -> Arrays.asList(PATTERN.split(value.toLowerCase())))

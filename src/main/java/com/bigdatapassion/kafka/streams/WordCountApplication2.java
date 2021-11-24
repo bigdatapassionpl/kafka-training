@@ -24,7 +24,7 @@ public class WordCountApplication2 {
 
         StreamsBuilder builder = new StreamsBuilder();
 
-        KStream<String, String> textLines = builder.stream(TOPIC);
+        KStream<String, String> textLines = builder.stream(TOPIC_SIMPLE);
 
         KTable<String, Long> wordCountTable = textLines
                 .flatMapValues(value -> Arrays.asList(PATTERN.split(value.toLowerCase())))
@@ -33,7 +33,7 @@ public class WordCountApplication2 {
 
         KStream<String, Long> wordCountStream = wordCountTable.toStream();
 
-        wordCountStream.to(TOPIC_OUT, Produced.with(Serdes.String(), Serdes.Long()));
+        wordCountStream.to(TOPIC_SIMPLE_WORDCOUNT, Produced.with(Serdes.String(), Serdes.Long()));
 
         KafkaStreams streams = new KafkaStreams(builder.build(), config);
 

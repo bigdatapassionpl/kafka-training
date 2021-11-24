@@ -8,32 +8,46 @@ import org.apache.log4j.Logger;
 
 import java.time.Duration;
 import java.time.temporal.ChronoUnit;
+import java.util.Collection;
 import java.util.Collections;
+import java.util.Properties;
 
-import static com.bigdatapassion.kafka.conf.KafkaConfigurationFactory.*;
+import static com.bigdatapassion.kafka.conf.KafkaConfigurationFactory.TIMEOUT;
+import static com.bigdatapassion.kafka.conf.KafkaConfigurationFactory.createConsumerConfig;
 
 /**
  * The consumer is designed to be run in its own thread!!!
  */
-public class KafkaConsumerApp {
+public abstract class KafkaConsumerApp<K, V> {
 
     private static final Logger LOGGER = Logger.getLogger(KafkaConsumerApp.class);
 
-    public static void main(String[] args) {
+    private Collection<String> topics;
 
-        KafkaConsumer<String, String> consumer = new KafkaConsumer<>(createConsumerConfig());
+    protected KafkaConsumerApp(String topic) {
+        this.topics = Collections.singletonList(topic);
+    }
 
-        consumer.subscribe(Collections.singletonList(TOPIC), new ConsumerRebalanceLoggerListener());
-        // consumer.subscribe(Arrays.asList(TOPIC, TOPIC2), new ConsumerRebalanceLoggerListener());
+    protected KafkaConsumerApp(Collection<String> topics) {
+        this.topics = topics;
+    }
+
+    protected void run() {
+
+        Properties consumerConfig = getConsumerProperties();
+
+        KafkaConsumer<K, V> consumer = new KafkaConsumer<>(consumerConfig);
+
+        consumer.subscribe(topics, new ConsumerRebalanceLoggerListener());
 
         try {
             while (true) {
 
-                ConsumerRecords<String, String> records = consumer.poll(Duration.of(TIMEOUT, ChronoUnit.MILLIS));
+                ConsumerRecords<K, V> records = consumer.poll(Duration.of(TIMEOUT, ChronoUnit.MILLIS));
                 if (records.count() > 0) {
                     LOGGER.info("Poll records: " + records.count());
 
-                    for (ConsumerRecord<String, String> record : records) {
+                    for (ConsumerRecord<K, V> record : records) {
                         System.out.printf("Received Message topic = %s, partition = %s, offset = %d, key = %s, value = %s\n",
                                 record.topic(), record.partition(), record.offset(), record.key(), record.value());
                     }
@@ -47,6 +61,10 @@ public class KafkaConsumerApp {
             consumer.commitSync(); // sync commit
             consumer.close();
         }
+    }
+
+    protected Properties getConsumerProperties() {
+        return createConsumerConfig();
     }
 
 }

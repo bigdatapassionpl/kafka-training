@@ -12,7 +12,7 @@ import java.util.Properties;
 
 import static com.bigdatapassion.kafka.conf.KafkaConfigurationFactory.*;
 
-public class WordCountApplication1 {
+public class SimpleWordCountStream {
 
     private static final String WORD_SPLIT_PATTERN = "\\W+";
     private static final String APPLICATION_NAME = "wordcount-application";
@@ -25,7 +25,7 @@ public class WordCountApplication1 {
 
         StreamsBuilder builder = new StreamsBuilder();
 
-        KStream<String, String> inputStreamWithMessages = builder.stream(TOPIC);
+        KStream<String, String> inputStreamWithMessages = builder.stream(TOPIC_SIMPLE);
 
         KTable<String, Long> wordCountTable = inputStreamWithMessages
                 .mapValues((ValueMapper<String, String>) String::toLowerCase) // --> to lower case
@@ -37,7 +37,7 @@ public class WordCountApplication1 {
                 .groupByKey() // --> group stream by keys
                 .count(Materialized.as(COUNTS_STORE)); // --> saving state to topic: ${applicationId}-${internalStoreName}-changelog
 
-        wordCountTable.toStream().to(TOPIC_OUT, Produced.with(Serdes.String(), Serdes.Long())); // --> konwerting KTable to regular stream and save in output topic
+        wordCountTable.toStream().to(TOPIC_SIMPLE_WORDCOUNT, Produced.with(Serdes.String(), Serdes.Long())); // --> konwerting KTable to regular stream and save in output topic
 
         Topology topology = builder.build();
         KafkaStreams streams = new KafkaStreams(topology, config);

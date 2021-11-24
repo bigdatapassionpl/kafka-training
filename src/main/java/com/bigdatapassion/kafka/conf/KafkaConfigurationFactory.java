@@ -14,10 +14,12 @@ public class KafkaConfigurationFactory {
     public static final String KAFKA_SERVER = "broker:9092,broker1:9092,broker2:9092,broker3:9092";
     public static final String KAFKA_SCHEMA_REGISTRY = "http://schema-registry:8081/";
 
-    public static final String TOPIC = "input-topic";
-    public static final String TOPIC_AVRO = "product-topic";
-    public static final String TOPIC_OUT = "output-topic";
-    public static final String TOPIC_THROUGH = "through-topic";
+    public static final String TOPIC_SIMPLE = "test-simple";
+    public static final String TOPIC_SIMPLE_WORDCOUNT = "test-simple-wordcount";
+    public static final String TOPIC_THROUGH = "test-wordcount-through";
+
+    public static final String TEST_PERSON = "test-person"; //json topic
+    public static final String TEST_PRODUCT = "test-product"; //avro topic
 
     public static final String CONSUMER_GROUP = "my-group";
 

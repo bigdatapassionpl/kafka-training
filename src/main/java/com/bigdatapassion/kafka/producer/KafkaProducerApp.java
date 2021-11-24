@@ -16,14 +16,7 @@ public abstract class KafkaProducerApp<K, V> {
     private static final Logger LOGGER = Logger.getLogger(KafkaProducerApp.class);
     private static final AtomicInteger MESSAGE_ID = new AtomicInteger(1);
 
-    protected abstract ProducerRecord<K, V> createRecord(long messageId);
-
-    protected Properties getProducerProperties() {
-        return createProducerConfig();
-    }
-
     protected void run() {
-        System.out.println();
 
         Properties producerConfig = getProducerProperties();
 
@@ -57,5 +50,11 @@ public abstract class KafkaProducerApp<K, V> {
             producer.close();
         }
     }
+
+    protected Properties getProducerProperties() {
+        return createProducerConfig();
+    }
+
+    protected abstract ProducerRecord<K, V> createRecord(long messageId);
 
 }

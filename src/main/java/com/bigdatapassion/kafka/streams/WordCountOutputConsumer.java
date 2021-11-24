@@ -32,7 +32,7 @@ public class WordCountOutputConsumer {
 
         KafkaConsumer<String, Long> consumer = new KafkaConsumer<>(consumerConfig);
 
-        consumer.subscribe(Collections.singletonList(TOPIC_OUT), new ConsumerRebalanceLoggerListener());
+        consumer.subscribe(Collections.singletonList(TOPIC_SIMPLE_WORDCOUNT), new ConsumerRebalanceLoggerListener());
 
         try {
             while (true) {

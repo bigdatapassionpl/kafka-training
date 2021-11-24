@@ -6,7 +6,7 @@ import org.apache.kafka.clients.producer.ProducerRecord;
 import java.nio.charset.StandardCharsets;
 import java.util.Random;
 
-import static com.bigdatapassion.kafka.conf.KafkaConfigurationFactory.TOPIC;
+import static com.bigdatapassion.kafka.conf.KafkaConfigurationFactory.TOPIC_SIMPLE;
 
 public class SimpleProducer extends KafkaProducerApp<String, String> {
 
@@ -27,7 +27,7 @@ public class SimpleProducer extends KafkaProducerApp<String, String> {
         int id = random.nextInt(messages.length);
         String key = "key-" + id;
         String value = messages[id];
-        return new ProducerRecord<>(TOPIC, key, value);
+        return new ProducerRecord<>(TOPIC_SIMPLE, key, value);
     }
 
 }

@@ -17,7 +17,7 @@ import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.TimeUnit;
 
-import static com.bigdatapassion.kafka.conf.KafkaConfigurationFactory.TOPIC;
+import static com.bigdatapassion.kafka.conf.KafkaConfigurationFactory.TOPIC_SIMPLE;
 import static com.bigdatapassion.kafka.conf.KafkaConfigurationFactory.createProducerConfig;
 
 /**
@@ -77,7 +77,7 @@ public class TwitterApp {
                     String id = obj.get("id").toString();
                     String text = obj.get("text").toString();
 
-                    ProducerRecord<String, String> data = new ProducerRecord<>(TOPIC, id, text);
+                    ProducerRecord<String, String> data = new ProducerRecord<>(TOPIC_SIMPLE, id, text);
                     producer.send(data, callback);
                 }
 

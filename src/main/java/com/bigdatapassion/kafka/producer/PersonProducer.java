@@ -8,7 +8,7 @@ import org.springframework.kafka.support.serializer.JsonSerializer;
 
 import java.util.Properties;
 
-import static com.bigdatapassion.kafka.conf.KafkaConfigurationFactory.TOPIC;
+import static com.bigdatapassion.kafka.conf.KafkaConfigurationFactory.TOPIC_SIMPLE;
 
 public class PersonProducer extends KafkaProducerApp<String, PersonMessage> {
 
@@ -21,7 +21,7 @@ public class PersonProducer extends KafkaProducerApp<String, PersonMessage> {
     @Override
     protected ProducerRecord<String, PersonMessage> createRecord(long messageId) {
         PersonMessage value = messageFactory.generateNextMessage(messageId);
-        return new ProducerRecord<>(TOPIC, value.getId().toString(), value);
+        return new ProducerRecord<>(TOPIC_SIMPLE, value.getId().toString(), value);
     }
 
     @Override
