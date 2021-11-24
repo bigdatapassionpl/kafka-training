@@ -1,27 +1,43 @@
 {
   "type" : "record",
-  "name" : "PersonAvro",
+  "name" : "PersonMessageAvro",
   "namespace" : "com.bigdatapassion.kafka.dto",
   "fields" : [ {
-    "name" : "animal",
+    "name" : "creationDate",
     "type" : [ "null", "string" ]
   }, {
-    "name" : "city",
-    "type" : [ "null", "string" ]
+    "name" : "id",
+    "type" : [ "null", {
+      "type" : "long",
+      "java-class" : "java.lang.Long"
+    } ]
   }, {
-    "name" : "country",
-    "type" : [ "null", "string" ]
-  }, {
-    "name" : "name",
-    "type" : [ "null", "string" ]
-  }, {
-    "name" : "number",
-    "type" : [ "null", "string" ]
-  }, {
-    "name" : "phoneNumber",
-    "type" : [ "null", "string" ]
-  }, {
-    "name" : "streetName",
-    "type" : [ "null", "string" ]
+    "name" : "person",
+    "type" : [ "null", {
+      "type" : "record",
+      "name" : "PersonAvro",
+      "fields" : [ {
+        "name" : "animal",
+        "type" : [ "null", "string" ]
+      }, {
+        "name" : "city",
+        "type" : [ "null", "string" ]
+      }, {
+        "name" : "country",
+        "type" : [ "null", "string" ]
+      }, {
+        "name" : "name",
+        "type" : [ "null", "string" ]
+      }, {
+        "name" : "number",
+        "type" : [ "null", "string" ]
+      }, {
+        "name" : "phoneNumber",
+        "type" : [ "null", "string" ]
+      }, {
+        "name" : "streetName",
+        "type" : [ "null", "string" ]
+      } ]
+    } ]
   } ]
 }

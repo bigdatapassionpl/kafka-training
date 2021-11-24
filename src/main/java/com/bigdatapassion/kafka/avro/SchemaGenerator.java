@@ -1,6 +1,6 @@
 package com.bigdatapassion.kafka.avro;
 
-import com.bigdatapassion.kafka.dto.Person;
+import com.bigdatapassion.kafka.dto.ProductMessage;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.avro.AvroFactory;
 import com.fasterxml.jackson.dataformat.avro.AvroSchema;
@@ -10,7 +10,7 @@ import org.apache.avro.Schema;
 public class SchemaGenerator {
 
     public static void main(String[] args) throws Exception {
-        Class<Person> type = Person.class;
+        Class<?> type = ProductMessage.class;
 
         ObjectMapper mapper = new ObjectMapper(new AvroFactory());
         com.fasterxml.jackson.dataformat.avro.schema.AvroSchemaGenerator gen = new AvroSchemaGenerator();

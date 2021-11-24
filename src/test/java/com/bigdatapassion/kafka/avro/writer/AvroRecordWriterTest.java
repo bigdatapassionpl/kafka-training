@@ -21,8 +21,8 @@ public class AvroRecordWriterTest {
         File avroFile = folder.newFile("products.avro");
         String productName = "Product some name";
         ProductAvro product = ProductAvro.newBuilder()
-                .setName(productName)
-                .setPrice(123)
+                .setProductName(productName)
+                .setPrice(String.valueOf(123))
                 .build();
 
         // when

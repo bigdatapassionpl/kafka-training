@@ -1,11 +1,10 @@
 package com.bigdatapassion.kafka.dto;
 
-
-public class PersonMessage {
+public class ProductMessage {
 
     private Long id;
     private String creationDate;
-    private Person person;
+    private Product product;
 
     public Long getId() {
         return id;
@@ -23,12 +22,12 @@ public class PersonMessage {
         this.creationDate = creationDate;
     }
 
-    public Person getPerson() {
-        return person;
+    public Product getProduct() {
+        return product;
     }
 
-    public void setPerson(Person person) {
-        this.person = person;
+    public void setProduct(Product product) {
+        this.product = product;
     }
 
 }

@@ -21,8 +21,8 @@ public class AvroRecordReaderTest {
         File avroFile = folder.newFile("products.avro");
         String productName = "Product some name";
         ProductAvro product = ProductAvro.newBuilder()
-                .setName(productName)
-                .setPrice(123)
+                .setProductName(productName)
+                .setPrice(String.valueOf(123))
                 .build();
 
         AvroRecordWriter<ProductAvro> avroRecordWriter = new AvroRecordWriter<>(ProductAvro.class);
@@ -34,7 +34,7 @@ public class AvroRecordReaderTest {
 
         // then
         assertThat(products).isNotEmpty();
-        assertThat(products.get(0).getName()).isEqualTo(productName);
+        assertThat(products.get(0).getProductName()).isEqualTo(productName);
         assertThat(products.get(0)).isEqualByComparingTo(product);
     }
 

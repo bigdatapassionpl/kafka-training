@@ -1,10 +1,37 @@
 {
-     "type": "record",
-     "namespace": "com.bigdatapassion.kafka.dto",
-     "name": "ProductAvro",
-     "doc": "Avro Schema for company products",
-     "fields": [
-       { "name": "name", "type": "string", "doc": "Product name" },
-       { "name": "price", "type": "double", "doc": "Product price" }
-     ]
+  "type" : "record",
+  "name" : "ProductMessageAvro",
+  "namespace" : "com.bigdatapassion.kafka.dto",
+  "fields" : [ {
+    "name" : "creationDate",
+    "type" : [ "null", "string" ]
+  }, {
+    "name" : "id",
+    "type" : [ "null", {
+      "type" : "long",
+      "java-class" : "java.lang.Long"
+    } ]
+  }, {
+    "name" : "product",
+    "type" : [ "null", {
+      "type" : "record",
+      "name" : "ProductAvro",
+      "fields" : [ {
+        "name" : "color",
+        "type" : [ "null", "string" ]
+      }, {
+        "name" : "material",
+        "type" : [ "null", "string" ]
+      }, {
+        "name" : "price",
+        "type" : [ "null", "string" ]
+      }, {
+        "name" : "productName",
+        "type" : [ "null", "string" ]
+      }, {
+        "name" : "promotionCode",
+        "type" : [ "null", "string" ]
+      } ]
+    } ]
+  } ]
 }
