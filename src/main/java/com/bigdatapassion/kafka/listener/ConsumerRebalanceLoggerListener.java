@@ -1,4 +1,4 @@
-package com.bigdatapassion.listener;
+package com.bigdatapassion.kafka.listener;
 
 import org.apache.kafka.clients.consumer.ConsumerRebalanceListener;
 import org.apache.kafka.common.TopicPartition;

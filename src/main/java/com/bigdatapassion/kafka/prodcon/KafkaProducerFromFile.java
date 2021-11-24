@@ -1,38 +1,38 @@
-package com.bigdatapassion.prodcon;
+package com.bigdatapassion.kafka.prodcon;
 
-import com.bigdatapassion.callback.LoggerCallback;
+import com.bigdatapassion.kafka.callback.LoggerCallback;
+import org.apache.commons.io.IOUtils;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.Producer;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.apache.log4j.Logger;
 
-import java.util.Random;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import static com.bigdatapassion.KafkaConfigurationFactory.*;
+import static com.bigdatapassion.kafka.conf.KafkaConfigurationFactory.*;
 
-public class KafkaProducerExample {
+public class KafkaProducerFromFile {
 
-    private static final Logger LOGGER = Logger.getLogger(KafkaProducerExample.class);
+    private static final Logger LOGGER = Logger.getLogger(KafkaProducerFromFile.class);
     private static final AtomicInteger MESSAGE_ID = new AtomicInteger(1);
-    private static final String[] MESSAGES = {"Ala ma kota, Ela ma psa", "W Szczebrzeszynie chrzaszcz brzmi w trzcinie", "Byc albo nie byc"};
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
 
         Producer<String, String> producer = new KafkaProducer<>(createProducerConfig());
 
         LoggerCallback callback = new LoggerCallback();
-        Random random = new Random(System.currentTimeMillis());
+
+        String message = IOUtils.resourceToString("message.txt", StandardCharsets.UTF_8, KafkaProducerFromFile.class.getClassLoader());
 
         try {
             while (true) {
 
-                for (long i = 0; i < MESSAGE_BATCH_COUNT; i++) {
+                for (long i = 0; i < 10; i++) {
 
-                    int id = random.nextInt(MESSAGES.length);
-                    String key = "key-" + id;
-                    String value = MESSAGES[id];
-                    ProducerRecord<String, String> data = new ProducerRecord<>(TOPIC, key, value);
+                    String key = "key-" + MESSAGE_ID;
+                    ProducerRecord<String, String> data = new ProducerRecord<>(TOPIC, key, message);
 
                     producer.send(data, callback); // async with callback
                     // producer.send(data); // async without callback

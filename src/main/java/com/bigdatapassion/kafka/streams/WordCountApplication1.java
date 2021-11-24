@@ -1,4 +1,4 @@
-package com.bigdatapassion.streams;
+package com.bigdatapassion.kafka.streams;
 
 import org.apache.kafka.common.serialization.Serdes;
 import org.apache.kafka.streams.KafkaStreams;
@@ -10,7 +10,7 @@ import org.apache.kafka.streams.kstream.*;
 import java.util.Arrays;
 import java.util.Properties;
 
-import static com.bigdatapassion.KafkaConfigurationFactory.*;
+import static com.bigdatapassion.kafka.conf.KafkaConfigurationFactory.*;
 
 public class WordCountApplication1 {
 

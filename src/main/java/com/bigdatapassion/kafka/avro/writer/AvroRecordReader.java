@@ -1,4 +1,4 @@
-package com.bigdatapassion.avro.writer;
+package com.bigdatapassion.kafka.avro.writer;
 
 import com.google.common.base.Preconditions;
 import org.apache.avro.file.DataFileReader;

@@ -1,6 +1,6 @@
-package com.bigdatapassion.streams;
+package com.bigdatapassion.kafka.streams;
 
-import com.bigdatapassion.listener.ConsumerRebalanceLoggerListener;
+import com.bigdatapassion.kafka.listener.ConsumerRebalanceLoggerListener;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
@@ -13,7 +13,7 @@ import java.util.Collections;
 import java.util.Properties;
 import java.util.Random;
 
-import static com.bigdatapassion.KafkaConfigurationFactory.*;
+import static com.bigdatapassion.kafka.conf.KafkaConfigurationFactory.*;
 
 /**
  * The consumer is designed to be run in its own thread!!!

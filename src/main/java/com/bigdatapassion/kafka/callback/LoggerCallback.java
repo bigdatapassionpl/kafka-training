@@ -1,4 +1,4 @@
-package com.bigdatapassion.callback;
+package com.bigdatapassion.kafka.callback;
 
 import org.apache.kafka.clients.producer.Callback;
 import org.apache.kafka.clients.producer.RecordMetadata;

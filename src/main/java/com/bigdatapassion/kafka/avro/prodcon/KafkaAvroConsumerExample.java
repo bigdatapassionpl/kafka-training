@@ -1,7 +1,7 @@
-package com.bigdatapassion.avro.prodcon;
+package com.bigdatapassion.kafka.avro.prodcon;
 
 import com.bigdatapassion.Product;
-import com.bigdatapassion.listener.ConsumerRebalanceLoggerListener;
+import com.bigdatapassion.kafka.listener.ConsumerRebalanceLoggerListener;
 import io.confluent.kafka.serializers.KafkaAvroDeserializer;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
@@ -13,7 +13,7 @@ import java.time.temporal.ChronoUnit;
 import java.util.Collections;
 import java.util.Properties;
 
-import static com.bigdatapassion.KafkaConfigurationFactory.*;
+import static com.bigdatapassion.kafka.conf.KafkaConfigurationFactory.*;
 
 /**
  * The consumer is designed to be run in its own thread!!!

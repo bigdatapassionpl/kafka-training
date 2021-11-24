@@ -1,7 +1,7 @@
-package com.bigdatapassion.avro.prodcon;
+package com.bigdatapassion.kafka.avro.prodcon;
 
 import com.bigdatapassion.Product;
-import com.bigdatapassion.callback.LoggerCallback;
+import com.bigdatapassion.kafka.callback.LoggerCallback;
 import io.confluent.kafka.serializers.KafkaAvroSerializer;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.Producer;
@@ -12,7 +12,7 @@ import java.util.Properties;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import static com.bigdatapassion.KafkaConfigurationFactory.*;
+import static com.bigdatapassion.kafka.conf.KafkaConfigurationFactory.*;
 import static org.apache.commons.math3.util.Precision.round;
 
 public class KafkaAvroProducerExample {

@@ -1,20 +1,17 @@
-package com.bigdatapassion.streams;
+package com.bigdatapassion.kafka.streams;
 
-import org.apache.kafka.common.serialization.Serdes;
 import org.apache.kafka.streams.KafkaStreams;
 import org.apache.kafka.streams.StreamsBuilder;
-import org.apache.kafka.streams.kstream.KStream;
-import org.apache.kafka.streams.kstream.KTable;
-import org.apache.kafka.streams.kstream.Materialized;
-import org.apache.kafka.streams.kstream.Produced;
+import org.apache.kafka.streams.kstream.*;
 
 import java.util.Arrays;
 import java.util.Properties;
 import java.util.regex.Pattern;
 
-import static com.bigdatapassion.KafkaConfigurationFactory.*;
+import static com.bigdatapassion.kafka.conf.KafkaConfigurationFactory.TOPIC;
+import static com.bigdatapassion.kafka.conf.KafkaConfigurationFactory.getStreamConfig;
 
-public class WordCountApplication2 {
+public class WordCountWindowApplication {
 
     private static final Pattern PATTERN = Pattern.compile("\\W+");
 
@@ -26,14 +23,16 @@ public class WordCountApplication2 {
 
         KStream<String, String> textLines = builder.stream(TOPIC);
 
-        KTable<String, Long> wordCountTable = textLines
+        KTable<Windowed<String>, Long> wordCountTable = textLines
                 .flatMapValues(value -> Arrays.asList(PATTERN.split(value.toLowerCase())))
+                .filter((key, value) -> value.contains("psa"))
                 .groupBy((key, word) -> word)
+                .windowedBy(TimeWindows.of(10))
                 .count(Materialized.as("counts-store"));
 
-        KStream<String, Long> wordCountStream = wordCountTable.toStream();
+        KStream<Windowed<String>, Long> wordCountStream = wordCountTable.toStream();
 
-        wordCountStream.to(TOPIC_OUT, Produced.with(Serdes.String(), Serdes.Long()));
+        wordCountStream.print(Printed.<Windowed<String>, Long>toSysOut().withLabel("Counted Parts"));
 
         KafkaStreams streams = new KafkaStreams(builder.build(), config);
 

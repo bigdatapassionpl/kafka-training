@@ -1,10 +1,10 @@
-package com.bigdatapassion
+package com.bigdatapassion.kafka
 
 import java.util.Collections
 
-import com.bigdatapassion.KafkaConfigurationFactory.{TIMEOUT, TOPIC, createConsumerConfig}
-import com.bigdatapassion.listener.ConsumerRebalanceLoggerListener
-import com.bigdatapassion.prodcon.KafkaConsumerExample
+import com.bigdatapassion.kafka.conf.KafkaConfigurationFactory.{TIMEOUT, TOPIC, createConsumerConfig}
+import com.bigdatapassion.kafka.listener.ConsumerRebalanceLoggerListener
+import com.bigdatapassion.kafka.prodcon.KafkaConsumerExample
 import org.apache.kafka.clients.consumer.KafkaConsumer
 import org.apache.log4j.Logger
 

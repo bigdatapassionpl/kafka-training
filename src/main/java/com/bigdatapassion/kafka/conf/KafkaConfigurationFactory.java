@@ -1,4 +1,4 @@
-package com.bigdatapassion;
+package com.bigdatapassion.kafka.conf;
 
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.producer.ProducerConfig;

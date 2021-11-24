@@ -1,6 +1,6 @@
-package com.bigdatapassion.prodcon;
+package com.bigdatapassion.kafka.prodcon;
 
-import com.bigdatapassion.listener.ConsumerRebalanceLoggerListener;
+import com.bigdatapassion.kafka.listener.ConsumerRebalanceLoggerListener;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
@@ -10,7 +10,7 @@ import java.time.Duration;
 import java.time.temporal.ChronoUnit;
 import java.util.Collections;
 
-import static com.bigdatapassion.KafkaConfigurationFactory.*;
+import static com.bigdatapassion.kafka.conf.KafkaConfigurationFactory.*;
 
 /**
  * The consumer is designed to be run in its own thread!!!

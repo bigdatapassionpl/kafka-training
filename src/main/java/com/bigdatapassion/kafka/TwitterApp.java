@@ -1,4 +1,4 @@
-package com.bigdatapassion.twitter;
+package com.bigdatapassion.kafka;
 
 import com.twitter.hbc.ClientBuilder;
 import com.twitter.hbc.core.Constants;
@@ -11,14 +11,14 @@ import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.Producer;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.json.JSONObject;
-import com.bigdatapassion.callback.LoggerCallback;
+import com.bigdatapassion.kafka.callback.LoggerCallback;
 
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.TimeUnit;
 
-import static com.bigdatapassion.KafkaConfigurationFactory.TOPIC;
-import static com.bigdatapassion.KafkaConfigurationFactory.createProducerConfig;
+import static com.bigdatapassion.kafka.conf.KafkaConfigurationFactory.TOPIC;
+import static com.bigdatapassion.kafka.conf.KafkaConfigurationFactory.createProducerConfig;
 
 /**
  * Twitter App based on: https://github.com/twitter/hbc
