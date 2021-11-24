@@ -11,7 +11,9 @@ import java.util.Properties;
 
 public class KafkaConfigurationFactory {
 
-    public static final String KAFKA_SERVER = "broker1:9092,broker2:9092,broker3:9092";
+//    public static final String KAFKA_SERVER = "broker:9092,broker1:9092,broker2:9092,broker3:9092";
+    public static final String KAFKA_SERVER = "bigdatacluster-w-1:9092";
+//    public static final String KAFKA_SERVER = "34.116.190.212:9092";
     // public static final String KAFKA_SERVER = "localhost:6667"; -> Hortonworks default port
     // public static final String KAFKA_SERVER = "localhost:9092"; --> use with one broker on localhost
     public static final String KAFKA_SCHEMA_REGISTRY = "http://schema-registry:8081/";
