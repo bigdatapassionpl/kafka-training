@@ -10,9 +10,10 @@ public class PersonMessageFactory {
     private Faker faker = new Faker();
     private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
 
-    public PersonMessage generateNextMessage(int number) {
+    public PersonMessage generateNextMessage(long number) {
 
         PersonMessage message = new PersonMessage();
+        message.setId(number);
         message.setCreationDate(LocalDateTime.now().format(formatter));
 
         Person person = new Person();

@@ -14,7 +14,7 @@ public class LoggerCallback implements Callback {
             LOGGER.error("Error while producing message to topic :" + recordMetadata);
             e.printStackTrace();
         } else {
-            String message = String.format("sent message to topic:%s partition:%s  offset:%s",
+            String message = String.format("Sent message to topic:%s partition:%s  offset:%s",
                     recordMetadata.topic(), recordMetadata.partition(), recordMetadata.offset());
             LOGGER.info(message);
         }

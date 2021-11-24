@@ -15,15 +15,15 @@ import static com.bigdatapassion.kafka.conf.KafkaConfigurationFactory.*;
 /**
  * The consumer is designed to be run in its own thread!!!
  */
-public class KafkaConsumerExample {
+public class KafkaConsumerApp {
 
-    private static final Logger LOGGER = Logger.getLogger(KafkaConsumerExample.class);
+    private static final Logger LOGGER = Logger.getLogger(KafkaConsumerApp.class);
 
     public static void main(String[] args) {
 
         KafkaConsumer<String, String> consumer = new KafkaConsumer<>(createConsumerConfig());
 
-        consumer.subscribe(Collections.singletonList(TOPIC_OUT), new ConsumerRebalanceLoggerListener());
+        consumer.subscribe(Collections.singletonList(TOPIC), new ConsumerRebalanceLoggerListener());
         // consumer.subscribe(Arrays.asList(TOPIC, TOPIC2), new ConsumerRebalanceLoggerListener());
 
         try {
