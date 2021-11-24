@@ -1,5 +1,6 @@
 package com.bigdatapassion.kafka.avro;
 
+import com.bigdatapassion.kafka.dto.PersonMessage;
 import com.bigdatapassion.kafka.dto.ProductMessage;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.avro.AvroFactory;
