@@ -70,23 +70,23 @@ public class KafkaConfigurationFactory {
      * https://kafka.apache.org/documentation/#streamsconfigs
      */
     public static Properties getStreamConfig() {
-        Properties config = new Properties();
-        config.put(StreamsConfig.BOOTSTRAP_SERVERS_CONFIG, KAFKA_SERVER);
-        config.put(StreamsConfig.APPLICATION_ID_CONFIG, "unknown-application-id");
+        Properties streamConfig = new Properties();
+        streamConfig.put(StreamsConfig.BOOTSTRAP_SERVERS_CONFIG, KAFKA_SERVER);
+        streamConfig.put(StreamsConfig.APPLICATION_ID_CONFIG, "unknown-application-id");
 
-        config.put(StreamsConfig.DEFAULT_KEY_SERDE_CLASS_CONFIG, Serdes.String().getClass().getName());
-        config.put(StreamsConfig.DEFAULT_VALUE_SERDE_CLASS_CONFIG, Serdes.String().getClass().getName());
+        streamConfig.put(StreamsConfig.DEFAULT_KEY_SERDE_CLASS_CONFIG, Serdes.String().getClass().getName());
+        streamConfig.put(StreamsConfig.DEFAULT_VALUE_SERDE_CLASS_CONFIG, Serdes.String().getClass().getName());
 
-        config.put(StreamsConfig.PROCESSING_GUARANTEE_CONFIG, StreamsConfig.EXACTLY_ONCE);
-        // config.put(StreamsConfig.COMMIT_INTERVAL_MS_CONFIG, 100);
+        streamConfig.put(StreamsConfig.PROCESSING_GUARANTEE_CONFIG, StreamsConfig.EXACTLY_ONCE);
+        // streamConfig.put(StreamsConfig.COMMIT_INTERVAL_MS_CONFIG, 100);
 
-        // consumer config
-        config.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest");
+        // consumer streamConfig
+        streamConfig.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest");
 
         // turn off cache, not recommended in prod
-        // config.put(StreamsConfig.CACHE_MAX_BYTES_BUFFERING_CONFIG, "0");
+        // streamConfig.put(StreamsConfig.CACHE_MAX_BYTES_BUFFERING_CONFIG, "0");
 
-        return config;
+        return streamConfig;
     }
 
 }
