@@ -1,4 +1,4 @@
-package com.bigdatapassion.kafka.datafactory;
+package com.bigdatapassion.kafka.dto;
 
 public class Person {
 

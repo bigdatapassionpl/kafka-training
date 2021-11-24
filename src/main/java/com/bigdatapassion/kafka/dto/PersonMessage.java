@@ -1,5 +1,7 @@
-package com.bigdatapassion.kafka.datafactory;
+package com.bigdatapassion.kafka.dto;
 
+
+import com.bigdatapassion.kafka.dto.Person;
 
 public class PersonMessage {
 

@@ -1,7 +1,7 @@
 {
      "type": "record",
-     "namespace": "com.bigdatapassion",
-     "name": "Product",
+     "namespace": "com.bigdatapassion.kafka.dto",
+     "name": "ProductAvro",
      "doc": "Avro Schema for company products",
      "fields": [
        { "name": "name", "type": "string", "doc": "Product name" },

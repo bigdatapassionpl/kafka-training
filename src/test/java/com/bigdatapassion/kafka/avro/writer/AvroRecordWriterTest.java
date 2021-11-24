@@ -1,6 +1,6 @@
 package com.bigdatapassion.kafka.avro.writer;
 
-import com.bigdatapassion.Product;
+import com.bigdatapassion.kafka.dto.ProductAvro;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
@@ -20,13 +20,13 @@ public class AvroRecordWriterTest {
     public void shouldWriteRecordToFile() throws IOException {
         File avroFile = folder.newFile("products.avro");
         String productName = "Product some name";
-        Product product = Product.newBuilder()
+        ProductAvro product = ProductAvro.newBuilder()
                 .setName(productName)
                 .setPrice(123)
                 .build();
 
         // when
-        AvroRecordWriter<Product> avroRecordWriter = new AvroRecordWriter<>(Product.class);
+        AvroRecordWriter<ProductAvro> avroRecordWriter = new AvroRecordWriter<>(ProductAvro.class);
         avroRecordWriter.writeToFile(product, avroFile);
 
         // then

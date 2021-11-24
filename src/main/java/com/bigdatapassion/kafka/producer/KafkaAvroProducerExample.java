@@ -1,7 +1,7 @@
-package com.bigdatapassion.kafka.avro.prodcon;
+package com.bigdatapassion.kafka.producer;
 
-import com.bigdatapassion.Product;
 import com.bigdatapassion.kafka.callback.LoggerCallback;
+import com.bigdatapassion.kafka.dto.ProductAvro;
 import io.confluent.kafka.serializers.KafkaAvroSerializer;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.Producer;
@@ -25,7 +25,7 @@ public class KafkaAvroProducerExample {
         Properties producerConfig = createProducerConfig();
         producerConfig.setProperty("value.serializer", KafkaAvroSerializer.class.getName());
         producerConfig.setProperty("schema.registry.url", KAFKA_SCHEMA_REGISTRY);
-        Producer<String, Product> producer = new KafkaProducer<>(producerConfig);
+        Producer<String, ProductAvro> producer = new KafkaProducer<>(producerConfig);
 
         LoggerCallback callback = new LoggerCallback();
         Random random = new Random(System.currentTimeMillis());
@@ -37,11 +37,11 @@ public class KafkaAvroProducerExample {
 
                     int id = MESSAGE_ID.getAndIncrement();
                     String key = "key-" + id;
-                    Product value = Product.newBuilder()
+                    ProductAvro value = ProductAvro.newBuilder()
                             .setName("Product " + id)
                             .setPrice(round(100 * random.nextDouble(), 2))
                             .build();
-                    ProducerRecord<String, Product> data = new ProducerRecord<>(TOPIC_AVRO, key, value);
+                    ProducerRecord<String, ProductAvro> data = new ProducerRecord<>(TOPIC_AVRO, key, value);
 
                     producer.send(data, callback); // async with callback
                     // producer.send(data); // async without callback

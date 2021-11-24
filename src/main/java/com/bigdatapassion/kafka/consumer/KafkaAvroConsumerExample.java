@@ -1,6 +1,6 @@
-package com.bigdatapassion.kafka.avro.prodcon;
+package com.bigdatapassion.kafka.consumer;
 
-import com.bigdatapassion.Product;
+import com.bigdatapassion.kafka.dto.ProductAvro;
 import com.bigdatapassion.kafka.listener.ConsumerRebalanceLoggerListener;
 import io.confluent.kafka.serializers.KafkaAvroDeserializer;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
@@ -27,18 +27,18 @@ public class KafkaAvroConsumerExample {
         Properties consumerConfig = createConsumerConfig();
         consumerConfig.setProperty("value.deserializer", KafkaAvroDeserializer.class.getName());
         consumerConfig.setProperty("schema.registry.url", KAFKA_SCHEMA_REGISTRY);
-        KafkaConsumer<String, Product> consumer = new KafkaConsumer<>(consumerConfig);
+        KafkaConsumer<String, ProductAvro> consumer = new KafkaConsumer<>(consumerConfig);
 
         consumer.subscribe(Collections.singletonList(TOPIC_AVRO), new ConsumerRebalanceLoggerListener());
 
         try {
             while (true) {
 
-                ConsumerRecords<String, Product> records = consumer.poll(Duration.of(TIMEOUT, ChronoUnit.MILLIS));
+                ConsumerRecords<String, ProductAvro> records = consumer.poll(Duration.of(TIMEOUT, ChronoUnit.MILLIS));
                 if (records.count() > 0) {
                     LOGGER.info("Poll records: " + records.count());
 
-                    for (ConsumerRecord<String, Product> record : records) {
+                    for (ConsumerRecord<String, ProductAvro> record : records) {
                         System.out.printf("Received Message topic = %s, partition = %s, offset = %d, key = %s, value = %s\n",
                                 record.topic(), record.partition(), record.offset(), record.key(), record.value());
                     }

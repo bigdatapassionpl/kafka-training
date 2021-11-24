@@ -1,5 +1,7 @@
 package com.bigdatapassion.kafka.datafactory;
 
+import com.bigdatapassion.kafka.dto.Person;
+import com.bigdatapassion.kafka.dto.PersonMessage;
 import com.github.javafaker.Faker;
 
 import java.time.LocalDateTime;

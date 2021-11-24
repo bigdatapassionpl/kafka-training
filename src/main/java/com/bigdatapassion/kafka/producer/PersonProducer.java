@@ -1,6 +1,6 @@
 package com.bigdatapassion.kafka.producer;
 
-import com.bigdatapassion.kafka.datafactory.PersonMessage;
+import com.bigdatapassion.kafka.dto.PersonMessage;
 import com.bigdatapassion.kafka.datafactory.PersonMessageFactory;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.clients.producer.ProducerRecord;

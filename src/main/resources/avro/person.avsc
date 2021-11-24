@@ -1,0 +1,27 @@
+{
+  "type" : "record",
+  "name" : "PersonAvro",
+  "namespace" : "com.bigdatapassion.kafka.dto",
+  "fields" : [ {
+    "name" : "animal",
+    "type" : [ "null", "string" ]
+  }, {
+    "name" : "city",
+    "type" : [ "null", "string" ]
+  }, {
+    "name" : "country",
+    "type" : [ "null", "string" ]
+  }, {
+    "name" : "name",
+    "type" : [ "null", "string" ]
+  }, {
+    "name" : "number",
+    "type" : [ "null", "string" ]
+  }, {
+    "name" : "phoneNumber",
+    "type" : [ "null", "string" ]
+  }, {
+    "name" : "streetName",
+    "type" : [ "null", "string" ]
+  } ]
+}

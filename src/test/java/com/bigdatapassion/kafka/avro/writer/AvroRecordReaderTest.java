@@ -1,6 +1,6 @@
 package com.bigdatapassion.kafka.avro.writer;
 
-import com.bigdatapassion.Product;
+import com.bigdatapassion.kafka.dto.ProductAvro;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
@@ -20,17 +20,17 @@ public class AvroRecordReaderTest {
     public void shouldReadAvroFile() throws IOException {
         File avroFile = folder.newFile("products.avro");
         String productName = "Product some name";
-        Product product = Product.newBuilder()
+        ProductAvro product = ProductAvro.newBuilder()
                 .setName(productName)
                 .setPrice(123)
                 .build();
 
-        AvroRecordWriter<Product> avroRecordWriter = new AvroRecordWriter<>(Product.class);
+        AvroRecordWriter<ProductAvro> avroRecordWriter = new AvroRecordWriter<>(ProductAvro.class);
         avroRecordWriter.writeToFile(product, avroFile);
 
         // when
-        AvroRecordReader<Product> avroRecordReader = new AvroRecordReader<>(Product.class);
-        List<Product> products = avroRecordReader.readFromFile(avroFile);
+        AvroRecordReader<ProductAvro> avroRecordReader = new AvroRecordReader<>(ProductAvro.class);
+        List<ProductAvro> products = avroRecordReader.readFromFile(avroFile);
 
         // then
         assertThat(products).isNotEmpty();

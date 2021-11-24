@@ -1,4 +1,4 @@
-package com.bigdatapassion.kafka.prodcon;
+package com.bigdatapassion.kafka.consumer;
 
 import com.bigdatapassion.kafka.listener.ConsumerRebalanceLoggerListener;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
