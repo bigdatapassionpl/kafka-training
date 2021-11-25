@@ -2,7 +2,6 @@ package com.bigdatapassion.kafka.consumer;
 
 import com.bigdatapassion.kafka.dto.ProductMessageAvro;
 import io.confluent.kafka.serializers.KafkaAvroDeserializer;
-import org.apache.log4j.Logger;
 
 import java.util.Properties;
 
@@ -14,10 +13,12 @@ import static com.bigdatapassion.kafka.conf.KafkaConfigurationFactory.TOPIC_PROD
  */
 public class KafkaProductAvroConsumer extends KafkaConsumerApp<String, ProductMessageAvro> {
 
-    private static final Logger LOGGER = Logger.getLogger(KafkaProductAvroConsumer.class);
-
     protected KafkaProductAvroConsumer() {
         super(TOPIC_PRODUCT);
+    }
+
+    public static void main(String[] args) throws Exception {
+        new KafkaProductAvroConsumer().run();
     }
 
     @Override

@@ -56,7 +56,7 @@ public abstract class KafkaStreamsApp {
 
     protected Properties createStreamProperties() {
         Properties streamConfig = createStreamConfig();
-        String applicationId = LOWER_CAMEL.to(LOWER_HYPHEN, SimpleWordCountStream.class.getSimpleName());
+        String applicationId = LOWER_CAMEL.to(LOWER_HYPHEN, this.getClass().getSimpleName());
         streamConfig.put(StreamsConfig.APPLICATION_ID_CONFIG, applicationId);
         return streamConfig;
     }

@@ -17,9 +17,6 @@ import static com.bigdatapassion.kafka.conf.KafkaConfigurationFactory.TOPIC_PERS
 
 public class PersonFilterStream extends KafkaStreamsApp {
 
-    private static final String COUNT_STORE = "count-store";
-
-
     public static void main(final String[] args) {
         new PersonFilterStream().run();
     }

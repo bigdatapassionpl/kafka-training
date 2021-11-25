@@ -22,6 +22,7 @@ public class KafkaConfigurationFactory {
     public static final String TOPIC_PERSON_FILTERED = "test-person-filtered"; //json topic
 
     public static final String TOPIC_PRODUCT = "test-product"; //avro topic
+    public static final String TOPIC_PRODUCT_AVG = "test-product-avg"; //avro topic
 
     public static final String CONSUMER_GROUP = "my-group";
 
