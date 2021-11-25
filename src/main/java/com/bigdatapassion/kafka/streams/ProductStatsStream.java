@@ -22,7 +22,6 @@ import static com.bigdatapassion.kafka.conf.KafkaConfigurationFactory.*;
 
 public class ProductStatsStream extends KafkaStreamsApp {
 
-    private static final String AVG_STORE = "avg-store";
     private static final String WINDOW_STORE_NAME = "window-store";
 
     public static void main(final String[] args) {
@@ -56,19 +55,13 @@ public class ProductStatsStream extends KafkaStreamsApp {
 
         KTable<Windowed<String>, CountAndSum> productCountAndSum = productByMaterial
                 .windowedBy(TimeWindows.of(Duration.ofSeconds(30)))
-                .aggregate(() -> new CountAndSum(),
+                .aggregate(CountAndSum::new,
                         (key, value, aggregate) -> {
                             aggregate.setCount(aggregate.getCount() + 1);
                             aggregate.setSum(aggregate.getSum() + value);
                             return aggregate;
                         }, buildWindowPersistentStore()
                 );
-//                .suppress(Suppressed.untilWindowCloses(unbounded()));
-
-
-//        KTable<Windowed<String>, Double> sumAverageTable = productCountAndSum
-//                .mapValues(value -> value.getSum() / value.getCount(), Materialized.as(AVG_STORE));
-
 
         KStream<String, Double> averageStream = productCountAndSum
                 .toStream()
