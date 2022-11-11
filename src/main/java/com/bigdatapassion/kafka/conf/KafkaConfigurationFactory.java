@@ -11,7 +11,7 @@ import java.util.Properties;
 
 public class KafkaConfigurationFactory {
 
-    public static final String KAFKA_SERVER = "broker:9092,broker1:9092,broker2:9092,broker3:9092";
+    public static final String KAFKA_SERVER = "localhost:9092";
     public static final String KAFKA_SCHEMA_REGISTRY = "http://schema-registry:8081/";
 
     public static final String TOPIC_SIMPLE = "test-simple";

@@ -4,6 +4,7 @@ import org.apache.kafka.streams.KafkaStreams;
 import org.apache.kafka.streams.StreamsBuilder;
 import org.apache.kafka.streams.kstream.*;
 
+import java.time.Duration;
 import java.util.Arrays;
 import java.util.Properties;
 import java.util.regex.Pattern;
@@ -27,7 +28,7 @@ public class WordCountWindowApplication {
                 .flatMapValues(value -> Arrays.asList(PATTERN.split(value.toLowerCase())))
                 .filter((key, value) -> value.contains("psa"))
                 .groupBy((key, word) -> word)
-                .windowedBy(TimeWindows.of(10))
+                .windowedBy(TimeWindows.of(Duration.ofSeconds(10)))
                 .count(Materialized.as("counts-store"));
 
         KStream<Windowed<String>, Long> wordCountStream = wordCountTable.toStream();
