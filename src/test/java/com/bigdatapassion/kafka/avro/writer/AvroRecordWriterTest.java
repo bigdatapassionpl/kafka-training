@@ -23,6 +23,9 @@ public class AvroRecordWriterTest {
         ProductAvro product = ProductAvro.newBuilder()
                 .setProductName(productName)
                 .setPrice(String.valueOf(123))
+                .setColor("Blue")
+                .setMaterial("Wood")
+                .setPromotionCode("")
                 .build();
 
         // when
