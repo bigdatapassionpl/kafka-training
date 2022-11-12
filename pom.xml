@@ -124,6 +124,14 @@
 
     <build>
 
+        <extensions>
+            <extension>
+                <groupId>org.springframework.build</groupId>
+                <artifactId>aws-maven</artifactId>
+                <version>5.0.0.RELEASE</version>
+            </extension>
+        </extensions>
+
         <plugins>
 
             <plugin>
@@ -148,5 +156,34 @@
         </plugins>
 
     </build>
+
+    <repositories>
+        <repository>
+            <id>radek-maven-repo-release</id>
+            <name>AWS S3 Release Repository</name>
+            <url>https://radek-maven-repo.s3.us-east-1.amazonaws.com/release/</url>
+        </repository>
+        <repository>
+            <id>radek-maven-repo-snapshot</id>
+            <name>AWS S3 Snapshot Repository</name>
+            <url>https://radek-maven-repo.s3.us-east-1.amazonaws.com/snapshot/</url>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
+
+    <distributionManagement>
+        <repository>
+            <id>radek-maven-repo-release</id>
+            <name>AWS S3 Release Repository</name>
+            <url>s3://radek-maven-repo/release</url>
+        </repository>
+        <snapshotRepository>
+            <id>radek-maven-repo-snapshot</id>
+            <name>AWS S3 Snapshot Repository</name>
+            <url>s3://radek-maven-repo/snapshot</url>
+        </snapshotRepository>
+    </distributionManagement>
 
 </project>
