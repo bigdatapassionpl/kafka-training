@@ -6,7 +6,7 @@ import io.confluent.kafka.serializers.KafkaAvroDeserializer;
 import java.util.Properties;
 
 import static com.bigdatapassion.kafka.conf.KafkaConfigurationFactory.KAFKA_SCHEMA_REGISTRY;
-import static com.bigdatapassion.kafka.conf.KafkaConfigurationFactory.TOPIC_PRODUCT;
+import static com.bigdatapassion.kafka.conf.KafkaConfigurationFactory.TOPIC_PRODUCT_AVRO;
 
 /**
  * The consumer is designed to be run in its own thread!!!
@@ -14,7 +14,7 @@ import static com.bigdatapassion.kafka.conf.KafkaConfigurationFactory.TOPIC_PROD
 public class KafkaProductAvroConsumer extends KafkaConsumerApp<String, ProductMessageAvro> {
 
     protected KafkaProductAvroConsumer() {
-        super(TOPIC_PRODUCT);
+        super(TOPIC_PRODUCT_AVRO);
     }
 
     public static void main(String[] args) throws Exception {

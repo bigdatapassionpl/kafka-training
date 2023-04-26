@@ -44,7 +44,7 @@ public class ProductStatsStream extends KafkaStreamsApp {
         final Serde<ProductMessageAvro> valueSpecificAvroSerde = new SpecificAvroSerde<>();
         valueSpecificAvroSerde.configure(serdeConfig, false); // `false` for record values
 
-        KStream<String, ProductMessageAvro> inputStream = builder.stream(TOPIC_PRODUCT, Consumed.with(Serdes.String(), valueSpecificAvroSerde));
+        KStream<String, ProductMessageAvro> inputStream = builder.stream(TOPIC_PRODUCT_AVRO, Consumed.with(Serdes.String(), valueSpecificAvroSerde));
 
         inputStream.print(Printed.<String, ProductMessageAvro>toSysOut().withLabel("input"));
 
