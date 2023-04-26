@@ -10,12 +10,12 @@ import java.util.Properties;
 import static com.bigdatapassion.kafka.conf.KafkaConfigurationFactory.KAFKA_SCHEMA_REGISTRY;
 import static com.bigdatapassion.kafka.conf.KafkaConfigurationFactory.TOPIC_PRODUCT;
 
-public class KafkaProductAvroProducer extends KafkaProducerApp<String, ProductMessageAvro> {
+public class ProductAvroProducer extends KafkaProducerApp<String, ProductMessageAvro> {
 
     private ProductMessageAvroFactory factory = new ProductMessageAvroFactory();
 
     public static void main(String[] args) {
-        new KafkaProductAvroProducer().run();
+        new ProductAvroProducer().run();
     }
 
     @Override

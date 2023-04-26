@@ -12,7 +12,7 @@ import java.util.Properties;
 public class KafkaConfigurationFactory {
 
     public static final String KAFKA_SERVER = "localhost:9092";
-    public static final String KAFKA_SCHEMA_REGISTRY = "http://schema-registry:8081/";
+    public static final String KAFKA_SCHEMA_REGISTRY = "http://localhost:8081/";
 
     public static final String TOPIC_SIMPLE = "test-simple";
     public static final String TOPIC_SIMPLE_WORDCOUNT = "test-simple-wordcount";
@@ -21,7 +21,7 @@ public class KafkaConfigurationFactory {
     public static final String TOPIC_PERSON = "test-person"; //json topic
     public static final String TOPIC_PERSON_FILTERED = "test-person-filtered"; //json topic
 
-    public static final String TOPIC_PRODUCT = "test-product"; //avro topic
+    public static final String TOPIC_PRODUCT = "test-product-avro"; //avro topic
     public static final String TOPIC_PRODUCT_AVG = "test-product-avg"; //avro topic
 
     public static final String CONSUMER_GROUP = "my-group";

@@ -10,12 +10,12 @@ import java.util.Properties;
 
 import static com.bigdatapassion.kafka.conf.KafkaConfigurationFactory.TOPIC_PERSON;
 
-public class PersonProducer extends KafkaProducerApp<String, PersonMessage> {
+public class PersonJsonProducer extends KafkaProducerApp<String, PersonMessage> {
 
     private PersonMessageFactory messageFactory = new PersonMessageFactory();
 
     public static void main(String[] args) {
-        new PersonProducer().run();
+        new PersonJsonProducer().run();
     }
 
     @Override
