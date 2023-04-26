@@ -22,6 +22,7 @@ public class ProductJsonSchemaProducer extends KafkaProducerApp<String, ProductM
         Properties properties = super.getProducerProperties();
         properties.setProperty("value.serializer", KafkaJsonSchemaSerializer.class.getName());
         properties.setProperty("schema.registry.url", KAFKA_SCHEMA_REGISTRY);
+        properties.setProperty("json.oneof.for.nullables", "false");
         return properties;
     }
 
