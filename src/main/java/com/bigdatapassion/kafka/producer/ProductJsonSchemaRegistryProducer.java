@@ -9,12 +9,12 @@ import java.util.Properties;
 
 import static com.bigdatapassion.kafka.conf.KafkaConfigurationFactory.*;
 
-public class ProductJsonSchemaProducer extends KafkaProducerApp<String, ProductMessage> {
+public class ProductJsonSchemaRegistryProducer extends KafkaProducerApp<String, ProductMessage> {
 
     private ProductMessageFactory factory = new ProductMessageFactory();
 
     public static void main(String[] args) {
-        new ProductJsonSchemaProducer().run();
+        new ProductJsonSchemaRegistryProducer().run();
     }
 
     @Override
@@ -31,7 +31,7 @@ public class ProductJsonSchemaProducer extends KafkaProducerApp<String, ProductM
 
         ProductMessage productMessage = factory.generateNextMessage(messageId);
 
-        return new ProducerRecord<>(TOPIC_PRODUCT_JSON_SCHEMA, productMessage.getId().toString(), productMessage);
+        return new ProducerRecord<>(TOPIC_PRODUCT_JSON_SCHEMA_REGISTRY, productMessage.getId().toString(), productMessage);
     }
 
 }
