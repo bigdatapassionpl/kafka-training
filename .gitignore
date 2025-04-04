@@ -26,3 +26,5 @@ WEB-INF/lib
 build
 
 jupyter/*
+
+.DS_Store
