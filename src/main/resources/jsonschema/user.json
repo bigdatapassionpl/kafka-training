@@ -1,0 +1,42 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "title": "User",
+  "description": "A user object example",
+  "properties": {
+    "id": {
+      "type": "integer",
+      "description": "The unique identifier for a user"
+    },
+    "name": {
+      "type": "string",
+      "description": "The user's full name"
+    },
+    "email": {
+      "type": "string",
+      "format": "email",
+      "description": "The user's email address"
+    },
+    "isActive": {
+      "type": "boolean",
+      "description": "Whether the user is active"
+    },
+    "roles": {
+      "type": "array",
+      "description": "Roles assigned to the user",
+      "items": {
+        "type": "string"
+      }
+    },
+    "address": {
+      "type": "object",
+      "description": "User's address",
+      "properties": {
+        "street": { "type": "string" },
+        "city": { "type": "string" },
+        "zip": { "type": "string" }
+      }
+    }
+  },
+  "required": ["id", "name", "email"]
+}
