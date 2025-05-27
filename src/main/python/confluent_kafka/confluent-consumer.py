@@ -1,4 +1,5 @@
 from confluent_kafka import Consumer
+import json
 
 kafka_topic = 'confluent-kafka-python-example-topic'
 
@@ -17,4 +18,8 @@ while True:
     if msg.error():
         print(f'Błąd: {msg.error()}')
         continue
-    print(f'Odebrano wiadomość: {msg.value().decode("utf-8")}')
+
+    message_str = msg.value().decode('utf-8')
+    message_obj = json.loads(message_str)
+
+    print(f'Odebrano wiadomość: {message_obj}')

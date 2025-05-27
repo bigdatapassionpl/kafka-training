@@ -7,7 +7,7 @@ kafka_topic = 'confluent-kafka-python-example-topic'
 conf = {'bootstrap.servers': 'localhost:9092'}  # adres brokera Kafka
 producer = Producer(conf)
 
-for x in range(60):
+for x in range(600000):
     message = {'klucz': f'wartość{x}'}
     print(f"Sending message: {message}")
     message_str = json.dumps(message).encode('utf-8')
