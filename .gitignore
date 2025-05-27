@@ -28,3 +28,5 @@ build
 jupyter/*
 
 .DS_Store
+
+.venv
