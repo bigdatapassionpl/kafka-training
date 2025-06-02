@@ -1,10 +1,22 @@
-from confluent_kafka import Producer
+import configparser
 import json
 import time
 
+from confluent_kafka import Producer
+
 kafka_topic = 'confluent-kafka-python-example-topic'
 
-conf = {'bootstrap.servers': 'localhost:9092'}  # adres brokera Kafka
+config = configparser.ConfigParser()
+config.read('/Users/radek/programs/kafka/config.properties')
+
+conf = {
+    'bootstrap.servers': 'bootstrap.mytestkafkacluster.europe-west3.managedkafka.bigdataworkshops.cloud.goog:9092',
+    'security.protocol': config['default']['security.protocol'],
+    'sasl.mechanism': config['default']['sasl.mechanism'],
+    'sasl.username': config['default']['username'],
+    'sasl.password': config['default']['password']
+}
+
 producer = Producer(conf)
 
 for x in range(600000):
