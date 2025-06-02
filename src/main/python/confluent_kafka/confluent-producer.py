@@ -20,7 +20,7 @@ conf = {
 producer = Producer(conf)
 
 for x in range(600000):
-    message = {'klucz': f'wartość{x}'}
+    message = {'key': f'value{x}'}
     print(f"Sending message: {message}")
     message_str = json.dumps(message).encode('utf-8')
     producer.produce(kafka_topic, value=message_str)
