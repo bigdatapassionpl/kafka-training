@@ -1,0 +1,55 @@
+{
+  "type": "object",
+  "required": [
+    "eventId",
+    "eventType",
+    "version",
+    "timestamp",
+    "source",
+    "payload"
+  ],
+  "title": "BaseEvent",
+  "description": "A user object example",
+  "properties": {
+    "eventId": {
+      "type": "string",
+      "format": "uuid",
+      "description": "Unique identifier for the event"
+    },
+    "eventType": {
+      "type": "string",
+      "description": "Type of the event (Business domain action)"
+    },
+    "version": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "Schema version number"
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO 8601 timestamp when event occurred"
+    },
+    "sourceSystem": {
+      "type": "string",
+      "description": "Originating system or component (message producer)"
+    },
+    "pii-category": {
+      "type": "string",
+      "description": "PII (Personally Identifiable Information)"
+    },
+    "correlationId": {
+      "type": "string",
+      "format": "uuid",
+      "description": "ID to correlate related events (optional)"
+    },
+    "payload": {
+      "type": "object",
+      "description": "Domain-specific event data"
+    },
+    "metadata": {
+      "type": "object",
+      "description": "Additional context information (optional)"
+    }
+  }
+}
