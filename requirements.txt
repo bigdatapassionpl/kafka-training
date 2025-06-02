@@ -1,2 +1,7 @@
 kafka-python
+
 confluent-kafka
+
+google-auth
+urllib3
+packaging
