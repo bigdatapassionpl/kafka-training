@@ -11,7 +11,7 @@ import java.util.Properties;
 
 public class KafkaConfigurationFactory {
 
-    public static final String KAFKA_SERVER = "localhost:9092";
+    public static final String KAFKA_SERVER = "bootstrap.mytestkafkacluster.europe-west3.managedkafka.bigdataworkshops.cloud.goog:9092";
     public static final String KAFKA_SCHEMA_REGISTRY = "http://localhost:8081/";
 
     public static final String TOPIC_SIMPLE = "test-simple";
@@ -57,6 +57,9 @@ public class KafkaConfigurationFactory {
         Properties producerConfig = new Properties();
         producerConfig.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, KAFKA_SERVER);
         // producerConfig.put(ProducerConfig.CLIENT_ID_CONFIG, "");
+
+        producerConfig.put("security.protocol", "SASL_SSL"); // or "SASL_PLAINTEXT"
+        producerConfig.put("sasl.mechanism", "PLAIN"); // or SCRAM-SHA-256, GSSAPI, etc.
 
         producerConfig.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
         producerConfig.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
