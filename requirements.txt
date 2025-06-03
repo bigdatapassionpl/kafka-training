@@ -1,7 +1,9 @@
 kafka-python
 
-confluent-kafka
+confluent-kafka[avro,schemaregistry]
 
 google-auth
 urllib3
 packaging
+avro-python3
+requests
