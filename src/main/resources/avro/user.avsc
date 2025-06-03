@@ -1,0 +1,19 @@
+{
+    "name": "User",
+    "type": "record",
+    "fields": [
+        {
+            "name": "name",
+            "type": "string",
+            "confluent:tags": ["PII"]
+        },
+        {
+            "name": "favorite_number",
+            "type": "long"
+        },
+        {
+            "name": "favorite_color",
+            "type": "string"
+        }
+    ]
+}
