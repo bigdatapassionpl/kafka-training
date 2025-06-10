@@ -8,6 +8,7 @@ from confluent_kafka.schema_registry import SchemaRegistryClient
 from confluent_kafka.schema_registry.avro import AvroSerializer
 from confluent_kafka.serialization import StringSerializer, SerializationContext, MessageField
 
+kafka_topic = 'confluent-kafka-python-avro-example-topic'
 
 class User(object):
     """
@@ -75,7 +76,6 @@ def delivery_report(err, msg):
 
 
 def main(configPath, configName):
-    kafka_topic = 'confluent-kafka-python-avro-example-topic'
 
     with open("/Users/radek/projects/bigdatapassion/kafka-training/src/main/resources/avro/user.avsc") as f:
         schema_str = f.read()
