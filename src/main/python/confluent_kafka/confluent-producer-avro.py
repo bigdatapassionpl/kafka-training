@@ -1,7 +1,8 @@
 import configparser
-import json
+import sys
 import time
 from uuid import uuid4
+
 from confluent_kafka import Producer
 from confluent_kafka.schema_registry import SchemaRegistryClient
 from confluent_kafka.schema_registry.avro import AvroSerializer
@@ -73,28 +74,28 @@ def delivery_report(err, msg):
         msg.key(), msg.topic(), msg.partition(), msg.offset()))
 
 
-def main():
+def main(configPath, configName):
     kafka_topic = 'confluent-kafka-python-avro-example-topic'
 
     with open("/Users/radek/projects/bigdatapassion/kafka-training/src/main/resources/avro/user.avsc") as f:
         schema_str = f.read()
 
     config = configparser.ConfigParser()
-    config.read('/Users/radek/programs/kafka/config.properties')
+    config.read(configPath)
 
-    username = config['default']['username']
-    token = config['default']['password']
+    username = config[configName]['username']
+    token = config[configName]['password']
 
     producer_conf = {
-        'bootstrap.servers': config['default']['bootstrap.servers'],
-        'security.protocol': config['default']['security.protocol'],
-        'sasl.mechanism': config['default']['sasl.mechanism'],
-        'sasl.username': config['default']['username'],
-        'sasl.password': config['default']['password']
+        'bootstrap.servers': config[configName]['bootstrap.servers'],
+        'security.protocol': config[configName]['security.protocol'],
+        'sasl.mechanism': config[configName]['sasl.mechanism'],
+        'sasl.username': config[configName]['username'],
+        'sasl.password': config[configName]['password']
     }
 
     schema_registry_conf = {
-        'url': config['default']['schema.registry'],
+        'url': config[configName]['schema.registry'],
         # 'basic.auth.credentials.source': 'USER_INFO',
         # 'basic.auth.user.info': f'{username}:{token}',
         # 'basic.auth.user.info': f'{username}:{token}',
@@ -107,7 +108,7 @@ def main():
         # 'bearer.auth.client.secret': '',
         # 'bearer.auth.client.id': '',
         'bearer.auth.token': token,
-        # 'basic.auth.user.info': config['default']['username'] + ':' + config['default']['password']
+        # 'basic.auth.user.info': config[configName]['username'] + ':' + config[configName]['password']
         # 'http.headers': {
         #     'Authorization': f'Bearer {token}'
         # }
@@ -141,4 +142,14 @@ def main():
     producer.flush()
 
 if __name__ == '__main__':
-    main()
+
+    print("All arguments:", sys.argv)
+    if len(sys.argv) > 2:
+        configPath = sys.argv[1]
+        configName = sys.argv[2]
+        print(f"configPath: {configPath}, configName: {configName}")
+    else:
+        print("Wrong number of arguments!")
+        sys.exit(1)
+
+    main(configPath, configName)
