@@ -1,25 +1,35 @@
-from kafka import KafkaProducer
-import json
-import time
 import configparser
+import json
+import sys
+import time
+
+from kafka import KafkaProducer
+
+print("All arguments:", sys.argv)
+if len(sys.argv) > 2:
+    configPath = sys.argv[1]
+    configName = sys.argv[2]
+    print(f"configPath: {configPath}, configName: {configName}")
+else:
+    print("Wrong number of arguments!")
+    sys.exit(1)
 
 kafka_topic = 'kafka-python-example-topic'
 
 config = configparser.ConfigParser()
-config.read('/Users/radek/programs/kafka/config.properties')
+config.read(configPath)
 
 producer = KafkaProducer(
-    bootstrap_servers=['bootstrap.mytestkafkacluster.europe-west3.managedkafka.bigdataworkshops.cloud.goog:9092'],
+    bootstrap_servers=[config[configName]['bootstrap.servers']],
+    security_protocol=config[configName]['security.protocol'],
+    sasl_mechanism=config[configName]['sasl.mechanism'],
+    sasl_plain_username=config[configName]['username'],
+    sasl_plain_password=config[configName]['password'],
 
     value_serializer=lambda v: json.dumps(v).encode('utf-8'),
-
-    security_protocol=config['default']['security.protocol'],
-    sasl_mechanism=config['default']['sasl.mechanism'],
-    sasl_plain_username=config['default']['username'],
-    sasl_plain_password=config['default']['password']
 )
 
-for x in range(60):
+for x in range(600000):
     message = {'klucz': f'wartość{x}'}
     print(f"Sending message: {message}")
     producer.send(kafka_topic, message)
