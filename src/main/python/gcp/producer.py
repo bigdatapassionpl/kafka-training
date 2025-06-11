@@ -1,5 +1,7 @@
-import confluent_kafka
 import argparse
+
+import confluent_kafka
+
 from tokenprovider import TokenProvider
 
 parser = argparse.ArgumentParser()
@@ -26,7 +28,6 @@ def callback(error, message):
     print("Delivered a message to {}[{}]".format(message.topic(), message.partition()))
 
 for i in range(args.num_messages):
-
     message = f"{i} hello world!".encode('utf-8')
     producer.produce(args.topic_name, message, callback=callback)
 

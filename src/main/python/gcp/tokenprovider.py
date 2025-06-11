@@ -1,11 +1,12 @@
 import base64
 import datetime
-import http.server
 import json
-import google.auth
-from google.auth.transport.urllib3 import Request
-import urllib3
 import time
+
+import google.auth
+import urllib3
+from google.auth.transport.urllib3 import Request
+
 
 def encode(source):
     """Safe base64 encoding."""
@@ -15,7 +16,7 @@ class TokenProvider(object):
     """
     Provides OAuth tokens from Google Cloud Application Default credentials.
     """
-    HEADER = json.dumps({'typ':'JWT', 'alg':'GOOG_OAUTH2_TOKEN'})
+    HEADER = json.dumps({'typ': 'JWT', 'alg': 'GOOG_OAUTH2_TOKEN'})
 
     def __init__(self, **config):
         self.credentials, _project = google.auth.default()
