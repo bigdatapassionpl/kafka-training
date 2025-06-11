@@ -12,6 +12,12 @@ def get_access_token():
     return credentials.token
 
 
+def get_access_token_with_quota(quota_project_id):
+    credentials, project = default(quota_project_id=quota_project_id)
+    credentials.refresh(Request())
+    return credentials.token
+
+
 # # Usage
 token = get_access_token()
 print(f"Access token: {token}")
