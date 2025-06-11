@@ -29,6 +29,7 @@ def callback(error, message):
 
 for i in range(args.num_messages):
     message = f"{i} hello world!".encode('utf-8')
+    print(f"Message: {message}")
     producer.produce(args.topic_name, message, callback=callback)
 
 producer.flush()
