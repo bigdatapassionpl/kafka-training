@@ -4,7 +4,9 @@ from google.auth.transport.requests import Request
 
 def get_access_token():
     # Get default credentials
-    credentials, project = default()
+    credentials, project = default(
+        scopes=['https://www.googleapis.com/auth/cloud-platform']
+    )
 
     # Refresh the credentials to get a valid access token
     credentials.refresh(Request())
