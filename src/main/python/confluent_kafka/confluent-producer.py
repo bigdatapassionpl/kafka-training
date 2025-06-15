@@ -14,18 +14,17 @@ else:
     print("Wrong number of arguments!")
     sys.exit(1)
 
+# Kafka Client configuration
 kafka_topic = 'confluent-kafka-python-example-topic'
+conf = {}
 
 config = configparser.ConfigParser()
 config.read(configPath)
 
-conf = {
-    'bootstrap.servers': config[configName]['bootstrap.servers'],
-    'security.protocol': config[configName]['security.protocol'],
-    'sasl.mechanism': config[configName]['sasl.mechanism'],
-    'sasl.username': config[configName]['username'],
-    'sasl.password': config[configName]['password']
-}
+# Reading Kafka Client configuration
+for key, value in config[configName].items():
+    print(f"{key} = {value}")
+    conf[key] = value
 
 producer = Producer(conf)
 

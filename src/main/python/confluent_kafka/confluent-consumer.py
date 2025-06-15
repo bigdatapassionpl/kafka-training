@@ -13,20 +13,20 @@ else:
     print("Wrong number of arguments!")
     sys.exit(1)
 
+# Kafka Client configuration
 kafka_topic = 'confluent-kafka-python-example-topic'
+conf = {
+    'group.id': 'radek-consumer-group',
+    'auto.offset.reset': 'earliest',
+}
 
 config = configparser.ConfigParser()
 config.read(configPath)
 
-conf = {
-    'bootstrap.servers': config[configName]['bootstrap.servers'],
-    'group.id': 'moja-grupa',
-    'auto.offset.reset': 'earliest',
-    'security.protocol': config[configName]['security.protocol'],
-    'sasl.mechanism': config[configName]['sasl.mechanism'],
-    'sasl.username': config[configName]['username'],
-    'sasl.password': config[configName]['password']
-}
+# Reading Kafka Client configuration
+for key, value in config[configName].items():
+    print(f"{key} = {value}")
+    conf[key] = value
 
 consumer = Consumer(conf)
 consumer.subscribe([kafka_topic])
