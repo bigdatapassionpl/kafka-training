@@ -7,6 +7,8 @@ from confluent_kafka import Producer
 from confluent_kafka.schema_registry import SchemaRegistryClient
 from confluent_kafka.schema_registry.avro import AvroSerializer
 from confluent_kafka.serialization import StringSerializer, SerializationContext, MessageField
+from google.auth import default
+from google.auth.transport.requests import Request
 
 kafka_topic = 'confluent-kafka-python-avro-example-topic'
 
@@ -75,6 +77,20 @@ def delivery_report(err, msg):
         msg.key(), msg.topic(), msg.partition(), msg.offset()))
 
 
+def bearer_auth_callback(parameter):
+    credentials, project = default(
+        scopes=['https://www.googleapis.com/auth/cloud-platform']
+    )
+
+    # Refresh the credentials to get a valid access token
+    credentials.refresh(Request())
+
+    token = credentials.token
+    parameter['bearer.auth.token'] = token
+    parameter['bearer.auth.identity.pool.id'] = ''
+    parameter['bearer.auth.logical.cluster'] = ''
+    return parameter
+
 def main(configPath, configName):
 
     with open("/Users/radek/projects/bigdatapassion/kafka-training/src/main/resources/avro/user.avsc") as f:
@@ -83,36 +99,30 @@ def main(configPath, configName):
     config = configparser.ConfigParser()
     config.read(configPath)
 
-    username = config[configName]['username']
-    token = config[configName]['password']
-
-    producer_conf = {
-        'bootstrap.servers': config[configName]['bootstrap.servers'],
-        'security.protocol': config[configName]['security.protocol'],
-        'sasl.mechanism': config[configName]['sasl.mechanism'],
-        'sasl.username': config[configName]['username'],
-        'sasl.password': config[configName]['password']
-    }
+    producer_conf = {}
+    # Reading Kafka Client configuration
+    for key, value in config[configName].items():
+        print(f"{key} = {value}")
+        producer_conf[key] = value
 
     schema_registry_conf = {
-        'url': config[configName]['schema.registry'],
-        # 'basic.auth.credentials.source': 'USER_INFO',
-        # 'basic.auth.user.info': f'{username}:{token}',
-        # 'basic.auth.user.info': f'{username}:{token}',
+        # 'bearer.auth.credentials.source': 'SASL_OAUTHBEARER_INHERIT',
+
+        'bearer.auth.credentials.source': 'CUSTOM',
+        'bearer.auth.custom.provider.config': {},
+        'bearer.auth.custom.provider.function': bearer_auth_callback,
+
         # 'bearer.auth.credentials.source': 'OAUTHBEARER',
-        'bearer.auth.credentials.source': 'STATIC_TOKEN',
-        'bearer.auth.logical.cluster': '',
-        'bearer.auth.identity.pool.id': '',
+        # 'bearer.auth.logical.cluster': '',
+        # 'bearer.auth.identity.pool.id': '',
+        # 'bearer.auth.client.id': 'unused',
+        # 'bearer.auth.client.secret': 'unused',
         # 'bearer.auth.scope': '',
-        # 'bearer.auth.issuer.endpoint.url': '',
-        # 'bearer.auth.client.secret': '',
-        # 'bearer.auth.client.id': '',
-        'bearer.auth.token': token,
-        # 'basic.auth.user.info': config[configName]['username'] + ':' + config[configName]['password']
-        # 'http.headers': {
-        #     'Authorization': f'Bearer {token}'
-        # }
+        # 'bearer.auth.issuer.endpoint.url': 'http://localhost:14293/',
     }
+    for key, value in config['schema.registry'].items():
+        print(f"{key} = {value}")
+        schema_registry_conf[key] = value
 
     schema_registry_client = SchemaRegistryClient(schema_registry_conf)
 
@@ -132,6 +142,12 @@ def main(configPath, configName):
                     favorite_number=x)
 
         print(f"Sending message: {user}")
+        print("User record: name: {}\n"
+              "\tfavorite_number: {}\n"
+              "\tfavorite_color: {}\n"
+              .format(user.name,
+                      user.favorite_number,
+                      user.favorite_color))
 
         producer.produce(topic=kafka_topic,
                          key=string_serializer(str(uuid4())),
