@@ -106,19 +106,9 @@ def main(configPath, configName):
         producer_conf[key] = value
 
     schema_registry_conf = {
-        # 'bearer.auth.credentials.source': 'SASL_OAUTHBEARER_INHERIT',
-
         'bearer.auth.credentials.source': 'CUSTOM',
         'bearer.auth.custom.provider.config': {},
         'bearer.auth.custom.provider.function': bearer_auth_callback,
-
-        # 'bearer.auth.credentials.source': 'OAUTHBEARER',
-        # 'bearer.auth.logical.cluster': '',
-        # 'bearer.auth.identity.pool.id': '',
-        # 'bearer.auth.client.id': 'unused',
-        # 'bearer.auth.client.secret': 'unused',
-        # 'bearer.auth.scope': '',
-        # 'bearer.auth.issuer.endpoint.url': 'http://localhost:14293/',
     }
     for key, value in config['schema.registry'].items():
         print(f"{key} = {value}")

@@ -5,6 +5,8 @@ from confluent_kafka import Consumer
 from confluent_kafka.schema_registry import SchemaRegistryClient
 from confluent_kafka.schema_registry.avro import AvroDeserializer
 from confluent_kafka.serialization import SerializationContext, MessageField
+from google.auth import default
+from google.auth.transport.requests import Request
 
 kafka_topic = 'confluent-kafka-python-avro-example-topic'
 
@@ -46,6 +48,21 @@ def dict_to_user(obj, ctx):
                 favorite_color=obj['favorite_color'])
 
 
+def bearer_auth_callback(parameter):
+    credentials, project = default(
+        scopes=['https://www.googleapis.com/auth/cloud-platform']
+    )
+
+    # Refresh the credentials to get a valid access token
+    credentials.refresh(Request())
+
+    token = credentials.token
+    parameter['bearer.auth.token'] = token
+    parameter['bearer.auth.identity.pool.id'] = ''
+    parameter['bearer.auth.logical.cluster'] = ''
+    return parameter
+
+
 def main(configPath, configName):
     with open("/Users/radek/projects/bigdatapassion/kafka-training/src/main/resources/avro/user.avsc") as f:
         schema_str = f.read()
@@ -53,31 +70,29 @@ def main(configPath, configName):
     config = configparser.ConfigParser()
     config.read(configPath)
 
-    username = config[configName]['username']
-    token = config[configName]['password']
+    consumer_conf = {
+        'group.id': 'radek-consumer-group',
+        'auto.offset.reset': "earliest"
+    }
+    # Reading Kafka Client configuration
+    for key, value in config[configName].items():
+        print(f"{key} = {value}")
+        consumer_conf[key] = value
 
     schema_registry_conf = {
-        'url': config[configName]['schema.registry'],
-        'bearer.auth.credentials.source': 'STATIC_TOKEN',
-        'bearer.auth.logical.cluster': '',
-        'bearer.auth.identity.pool.id': '',
-        'bearer.auth.token': token,
+        'bearer.auth.credentials.source': 'CUSTOM',
+        'bearer.auth.custom.provider.config': {},
+        'bearer.auth.custom.provider.function': bearer_auth_callback,
     }
+    for key, value in config['schema.registry'].items():
+        print(f"{key} = {value}")
+        schema_registry_conf[key] = value
+
     schema_registry_client = SchemaRegistryClient(schema_registry_conf)
 
     avro_deserializer = AvroDeserializer(schema_registry_client,
                                          schema_str,
                                          dict_to_user)
-
-    consumer_conf = {
-        'bootstrap.servers': config[configName]['bootstrap.servers'],
-        'security.protocol': config[configName]['security.protocol'],
-        'sasl.mechanism': config[configName]['sasl.mechanism'],
-        'sasl.username': config[configName]['username'],
-        'sasl.password': config[configName]['password'],
-        'group.id': 'consumer_group',
-        'auto.offset.reset': "earliest"
-    }
 
     consumer = Consumer(consumer_conf)
     consumer.subscribe([kafka_topic])
