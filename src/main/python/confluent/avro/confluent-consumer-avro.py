@@ -71,7 +71,7 @@ def main(configPath, configName):
     config.read(configPath)
 
     consumer_conf = {
-        'group.id': 'radek-consumer-group',
+        'group.id': 'example-consumer-group',
         'auto.offset.reset': "earliest"
     }
     # Reading Kafka Client configuration

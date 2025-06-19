@@ -1,16 +1,19 @@
 import base64
 import datetime
-import http.server
 import json
 import time
+
 import google.auth
 import google.auth.transport.urllib3
 import urllib3
 
+
 # Token Provider Class
 class TokenProvider(object):
  def __init__(self, **config):
-   self.credentials, _project = google.auth.default()
+   self.credentials, _project = google.auth.default(
+       scopes=['https://www.googleapis.com/auth/cloud-platform']
+   )
    self.http_client = urllib3.PoolManager()
    self.HEADER = json.dumps(dict(typ='JWT', alg='GOOG_OAUTH2_TOKEN'))
 
@@ -61,8 +64,8 @@ class TokenProvider(object):
    return self.get_kafka_access_token(creds), time.time() + expiry_seconds
 
 # Confluent does not use a TokenProvider, it calls a method
-def ConfluentTokenProvider(args):
- """Method to get the Confluent Token"""
- t = TokenProvider()
- token = t.confluent_token()
- return token
+def ConfluentTokenProvider():
+    """Method to get the Confluent Token"""
+    t = TokenProvider()
+    token = t.confluent_token()
+    return token
