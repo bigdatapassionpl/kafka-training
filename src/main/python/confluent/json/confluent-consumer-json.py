@@ -16,7 +16,7 @@ else:
 # Kafka Client configuration
 kafka_topic = 'confluent-kafka-python-example-topic'
 conf = {
-    'group.id': 'radek-consumer-group',
+    'group.id': 'example-consumer-group',
     'auto.offset.reset': 'earliest',
 }
 
