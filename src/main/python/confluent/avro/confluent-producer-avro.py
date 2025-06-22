@@ -1,4 +1,5 @@
 import configparser
+import os
 import sys
 import time
 from uuid import uuid4
@@ -12,64 +13,23 @@ from google.auth.transport.requests import Request
 
 kafka_topic = 'confluent-kafka-python-avro-example-topic'
 
+
 class User(object):
-    """
-    User record
-
-    Args:
-        name (str): User's name
-
-        favorite_number (int): User's favorite number
-
-        favorite_color (str): User's favorite color
-
-        address(str): User's address; confidential
-    """
-
     def __init__(self, name, address, favorite_number, favorite_color):
         self.name = name
         self.favorite_number = favorite_number
         self.favorite_color = favorite_color
-        # address should not be serialized, see user_to_dict()
-        self._address = address
+
 
 def user_to_dict(user, ctx):
-    """
-    Returns a dict representation of a User instance for serialization.
+    return dict(
+        name=user.name,
+        favorite_number=user.favorite_number,
+        favorite_color=user.favorite_color
+    )
 
-    Args:
-        user (User): User instance.
-
-        ctx (SerializationContext): Metadata pertaining to the serialization
-            operation.
-
-    Returns:
-        dict: Dict populated with user attributes to be serialized.
-    """
-
-    # User._address must not be serialized; omit from dict
-    return dict(name=user.name,
-                favorite_number=user.favorite_number,
-                favorite_color=user.favorite_color)
 
 def delivery_report(err, msg):
-    """
-    Reports the failure or success of a message delivery.
-
-    Args:
-        err (KafkaError): The error that occurred on None on success.
-
-        msg (Message): The message that was produced or failed.
-
-    Note:
-        In the delivery report callback the Message.key() and Message.value()
-        will be the binary format as encoded by any configured Serializers and
-        not the same object that was passed to produce().
-        If you wish to pass the original object(s) for key and value to delivery
-        report callback we recommend a bound callback or lambda where you pass
-        the objects along.
-    """
-
     if err is not None:
         print("Delivery failed for User record {}: {}".format(msg.key(), err))
         return
@@ -82,7 +42,6 @@ def bearer_auth_callback(parameter):
         scopes=['https://www.googleapis.com/auth/cloud-platform']
     )
 
-    # Refresh the credentials to get a valid access token
     credentials.refresh(Request())
 
     token = credentials.token
@@ -91,9 +50,12 @@ def bearer_auth_callback(parameter):
     parameter['bearer.auth.logical.cluster'] = ''
     return parameter
 
-def main(configPath, configName):
 
-    with open("/Users/radek/projects/bigdatapassion/kafka-training/src/main/resources/avro/user.avsc") as f:
+def main(configPath, configName, schemaRegistryConfigName):
+    # Reading Schema file
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    file_path = os.path.join(script_dir, "user.avsc")
+    with open(file_path) as f:
         schema_str = f.read()
 
     config = configparser.ConfigParser()
@@ -110,7 +72,7 @@ def main(configPath, configName):
         'bearer.auth.custom.provider.config': {},
         'bearer.auth.custom.provider.function': bearer_auth_callback,
     }
-    for key, value in config['schema.registry'].items():
+    for key, value in config[schemaRegistryConfigName].items():
         print(f"{key} = {value}")
         schema_registry_conf[key] = value
 
@@ -125,7 +87,6 @@ def main(configPath, configName):
     producer = Producer(producer_conf)
 
     for x in range(600000):
-
         user = User(name=f"User name ${x}",
                     address="user_address_${x}",
                     favorite_color=f"user_favorite_color_${x}",
@@ -147,15 +108,17 @@ def main(configPath, configName):
 
     producer.flush()
 
+
 if __name__ == '__main__':
 
     print("All arguments:", sys.argv)
-    if len(sys.argv) > 2:
+    if len(sys.argv) > 3:
         configPath = sys.argv[1]
         configName = sys.argv[2]
+        schemaRegistryConfigName = sys.argv[3]
         print(f"configPath: {configPath}, configName: {configName}")
     else:
         print("Wrong number of arguments!")
         sys.exit(1)
 
-    main(configPath, configName)
+    main(configPath, configName, schemaRegistryConfigName)

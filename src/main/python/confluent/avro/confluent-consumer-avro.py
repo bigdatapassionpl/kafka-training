@@ -12,17 +12,6 @@ kafka_topic = 'confluent-kafka-python-avro-example-topic'
 
 
 class User(object):
-    """
-    User record
-
-    Args:
-        name (str): User's name
-
-        favorite_number (int): User's favorite number
-
-        favorite_color (str): User's favorite color
-    """
-
     def __init__(self, name=None, favorite_number=None, favorite_color=None):
         self.name = name
         self.favorite_number = favorite_number
@@ -30,22 +19,13 @@ class User(object):
 
 
 def dict_to_user(obj, ctx):
-    """
-    Converts object literal(dict) to a User instance.
-
-    Args:
-        obj (dict): Object literal(dict)
-
-        ctx (SerializationContext): Metadata pertaining to the serialization
-            operation.
-    """
-
     if obj is None:
         return None
-
-    return User(name=obj['name'],
-                favorite_number=obj['favorite_number'],
-                favorite_color=obj['favorite_color'])
+    return User(
+        name=obj['name'],
+        favorite_number=obj['favorite_number'],
+        favorite_color=obj['favorite_color']
+    )
 
 
 def bearer_auth_callback(parameter):
@@ -53,7 +33,6 @@ def bearer_auth_callback(parameter):
         scopes=['https://www.googleapis.com/auth/cloud-platform']
     )
 
-    # Refresh the credentials to get a valid access token
     credentials.refresh(Request())
 
     token = credentials.token
@@ -64,7 +43,7 @@ def bearer_auth_callback(parameter):
 
 
 def main(configPath, configName):
-    with open("/Users/radek/projects/bigdatapassion/kafka-training/src/main/resources/avro/user.avsc") as f:
+    with open("user.avsc") as f:
         schema_str = f.read()
 
     config = configparser.ConfigParser()
