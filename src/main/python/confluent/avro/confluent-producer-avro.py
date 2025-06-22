@@ -51,7 +51,7 @@ def bearer_auth_callback(parameter):
     return parameter
 
 
-def main(configPath, configName, schemaRegistryConfigName):
+def main(config_path, config_name, schema_registry_config_name):
     # Reading Schema file
     script_dir = os.path.dirname(os.path.abspath(__file__))
     file_path = os.path.join(script_dir, "user.avsc")
@@ -59,11 +59,11 @@ def main(configPath, configName, schemaRegistryConfigName):
         schema_str = f.read()
 
     config = configparser.ConfigParser()
-    config.read(configPath)
+    config.read(config_path)
 
     producer_conf = {}
     # Reading Kafka Client configuration
-    for key, value in config[configName].items():
+    for key, value in config[config_name].items():
         print(f"{key} = {value}")
         producer_conf[key] = value
 
@@ -72,7 +72,7 @@ def main(configPath, configName, schemaRegistryConfigName):
         'bearer.auth.custom.provider.config': {},
         'bearer.auth.custom.provider.function': bearer_auth_callback,
     }
-    for key, value in config[schemaRegistryConfigName].items():
+    for key, value in config[schema_registry_config_name].items():
         print(f"{key} = {value}")
         schema_registry_conf[key] = value
 

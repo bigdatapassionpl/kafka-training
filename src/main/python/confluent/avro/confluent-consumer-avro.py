@@ -1,4 +1,5 @@
 import configparser
+import os
 import sys
 
 from confluent_kafka import Consumer
@@ -42,19 +43,22 @@ def bearer_auth_callback(parameter):
     return parameter
 
 
-def main(configPath, configName):
-    with open("user.avsc") as f:
+def main(config_path, config_name, schema_registry_config_name):
+    # Reading Schema file
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    file_path = os.path.join(script_dir, "user.avsc")
+    with open(file_path) as f:
         schema_str = f.read()
 
     config = configparser.ConfigParser()
-    config.read(configPath)
+    config.read(config_path)
 
     consumer_conf = {
         'group.id': 'example-consumer-group',
         'auto.offset.reset': "earliest"
     }
     # Reading Kafka Client configuration
-    for key, value in config[configName].items():
+    for key, value in config[config_name].items():
         print(f"{key} = {value}")
         consumer_conf[key] = value
 
@@ -63,7 +67,7 @@ def main(configPath, configName):
         'bearer.auth.custom.provider.config': {},
         'bearer.auth.custom.provider.function': bearer_auth_callback,
     }
-    for key, value in config['schema.registry'].items():
+    for key, value in config[schema_registry_config_name].items():
         print(f"{key} = {value}")
         schema_registry_conf[key] = value
 
@@ -100,12 +104,13 @@ def main(configPath, configName):
 if __name__ == '__main__':
 
     print("All arguments:", sys.argv)
-    if len(sys.argv) > 2:
+    if len(sys.argv) > 3:
         configPath = sys.argv[1]
         configName = sys.argv[2]
+        schemaRegistryConfigName = sys.argv[3]
         print(f"configPath: {configPath}, configName: {configName}")
     else:
         print("Wrong number of arguments!")
         sys.exit(1)
 
-    main(configPath, configName)
+    main(configPath, configName, schemaRegistryConfigName)
